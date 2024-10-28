@@ -25,7 +25,7 @@ import 'package:o3d/o3d.dart';
 //   const TimeCounter({super.key, required this.title});
 
 //   final String title;
-  
+
 //   @override
 //   State<StatefulWidget> createState() => _TimeCounterState();
 // }
@@ -34,7 +34,7 @@ import 'package:o3d/o3d.dart';
 
 //   O3DController o3dController = O3DController();
 //   PageController mainController = PageController();
-  
+
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
@@ -57,7 +57,7 @@ import 'package:o3d/o3d.dart';
 //       ),
 //     );
 //   }
-  
+
 // }
 
 void main() {
@@ -95,30 +95,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     final height = MediaQuery.sizeOf(context).height;
 
     return Scaffold(
-      backgroundColor: Colors.blue.shade50,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            const Text('3Dฟหกฟหกหก'),
-            O3D(
-              src: 'assets/grandpa.glb',
-              controller: o3dController,
-              ar: false,
-              autoPlay: true,
-              autoRotate: false,
-              cameraControls: false,
-              cameraTarget: CameraTarget(-.25, 1.5, 1.5),
-              cameraOrbit: CameraOrbit(0, 90, 1),
-            ),
-            PageView(
-              controller: mainPageController
-            )
-          ])
-        )
-    );
+        backgroundColor: Colors.blue.shade50,
+        body: SafeArea(
+            child: Stack(children: [
+          const Text('3D'),
+          // O3D(
+          //   src: 'assets/disney_style_character.glb',
+          //   controller: o3dController,
+          //   ar: false,
+          //   autoPlay: true,
+          //   autoRotate: false,
+          //   cameraControls: false,
+          //   cameraTarget: CameraTarget(-.25, 1.5, 1.5),
+          //   cameraOrbit: CameraOrbit(0, 90, 1),
+          // ),
+          const O3D.network(
+              src:
+                  'https://modelviewer.dev/shared-assets/models/Astronaut.glb'),
+          PageView(controller: mainPageController)
+        ])));
   }
 }
