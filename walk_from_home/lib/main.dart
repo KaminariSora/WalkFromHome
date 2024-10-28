@@ -101,9 +101,9 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.blue.shade50,
         body: SafeArea(
             child: Stack(children: [
-          const Text('3D blah blah'),
+          const Text('3D'),
           O3D(
-            src: 'assets/disney_style_character.glb',
+            src: 'assets/grandpa.glb',
             controller: o3dController,
             ar: false,
             autoPlay: true,
