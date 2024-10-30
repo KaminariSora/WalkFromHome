@@ -75,47 +75,67 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: const TimeCounter(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class TimeCounter extends StatefulWidget {
+  const TimeCounter({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<TimeCounter> createState() => _TimeCounterState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _TimeCounterState extends State<TimeCounter> {
   O3DController o3dController = O3DController();
-  PageController mainPageController = PageController();
-  PageController textsPageController = PageController();
-  int page = 0;
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
 
     return Scaffold(
-        backgroundColor: Colors.blue.shade50,
-        body: SafeArea(
-            child: Stack(children: [
-          const Text('3D'),
-          O3D(
-            src: 'assets/grandpa.glb',
-            controller: o3dController,
-            ar: false,
-            autoPlay: true,
-            autoRotate: false,
-            cameraControls: false,
-            cameraTarget: CameraTarget(-.25, 1.5, 1.5),
-            cameraOrbit: CameraOrbit(0, 90, 1),
+      body: Stack(
+        children: [
+          Center(
+            child: Container(
+              height: 350,
+              width: 328,
+              color: Colors.green,
+              child: Align(
+                alignment: Alignment.center, // Adjust the alignment
+                child: SizedBox(
+                  child: O3D(
+                    src: 'assets/grandpa.glb',
+                    controller: o3dController,
+                    ar: false,
+                    autoPlay: true,
+                    autoRotate: false,
+                    cameraControls: false,
+                    cameraTarget: CameraTarget(0, 0, 0),
+                    cameraOrbit: CameraOrbit(0, 90, 1.8),
+                  ),
+                ),
+              ),
+            ),
           ),
-          // const O3D.network(
-          //     src:
-          //         'https://modelviewer.dev/shared-assets/models/Astronaut.glb'),
-          PageView(controller: mainPageController)
-        ])));
+          Positioned(
+            top: height * 0.1, // Adjust vertical position
+            left: 50.0, // Adjust horizontal position
+            child: Container(
+              width: 100.0, // Adjust box width
+              height: 50.0, // Adjust box height
+              color: Colors.blue.withOpacity(0.7), // Box color with opacity
+              child: const Center(
+                child: Text(
+                  'Overlay Box',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
