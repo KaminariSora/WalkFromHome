@@ -2,6 +2,22 @@
 import 'package:flutter/material.dart';
 import 'package:o3d/o3d.dart';
 
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'UI 3D flutter',
+//       theme: ThemeData(
+//         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+//         useMaterial3: true,
+//       ),
+//       home: const TimeCounter(),
+//     );
+//   }
+// }
+
 class TimeCounter extends StatefulWidget {
   const TimeCounter({super.key});
 
