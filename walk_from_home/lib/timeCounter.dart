@@ -2,22 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:o3d/o3d.dart';
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'UI 3D flutter',
-//       theme: ThemeData(
-//         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-//         useMaterial3: true,
-//       ),
-//       home: const TimeCounter(),
-//     );
-//   }
-// }
-
 class TimeCounter extends StatefulWidget {
   const TimeCounter({super.key});
 
@@ -30,12 +14,21 @@ class _TimeCounterState extends State<TimeCounter> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-        backgroundColor: Colors.blue.shade50,
+        // backgroundColor: Colors.blue.shade50,
         body: SafeArea(
           child: Stack(
             children: [
+              const SizedBox(height: 80),
+              Positioned(
+                top: 130, // Adjust this value based on how high you want it from the top
+                left: (MediaQuery.of(context).size.width - 322) / 2, // Center it horizontally
+                child: const CustomProgressBar(
+                  width: 322,
+                  height: 31,
+                  progress: 0.1,
+                ),
+              ),
               Center(
                 child: Container(
                   width: 328,
@@ -62,7 +55,48 @@ class _TimeCounterState extends State<TimeCounter> {
               Container()
             ],
           ),
+        ));
+  }
+}
+
+class CustomProgressBar extends StatelessWidget {
+  final double progress; // Progress from 0.0 to 1.0
+  final Color backgroundColor;
+  final Color progressColor;
+  final double height;
+  final double width;
+
+  const CustomProgressBar({
+    Key? key,
+    required this.progress,
+    required this.height,
+    required this.width,
+    this.backgroundColor = Colors.white,
+    this.progressColor = const Color(0xFF008000),
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height,
+      width: width,
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(50.0),
+        border: Border.all(
+          color: Colors.black,
+          width: 1.0
         )
-      );
+      ),
+      child: Stack(children: [
+        Container(
+          width: width * progress,
+          decoration: BoxDecoration(
+            color: progressColor,
+            borderRadius: BorderRadius.circular(50.0),
+          ),
+        ),
+      ]),
+    );
   }
 }
