@@ -21,12 +21,13 @@ class _TimeCounterState extends State<TimeCounter> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(height: 80),
+          // const SizedBox(height: 80),
           const CustomProgressBar(
             width: 322,
             height: 31,
             progress: 0.1,
           ),
+          const Padding(padding: EdgeInsets.only(bottom: 40)),
           Center(
             child: Container(
               width: 328,
@@ -51,17 +52,44 @@ class _TimeCounterState extends State<TimeCounter> {
             ),
           ),
           const Text(
-            '5.50',
+            '05.50',
             style: TextStyle(fontSize: 48),
           ),
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.black,
-                width: 2
-              )
+          ElevatedButton(
+            onPressed: () {
+              print('pause');
+            },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                shadowColor: Colors.transparent
+              ),
+            child: const Icon(
+              Icons.pause,
+              size: 50,
+              color: Colors.black,
             ),
-          )
+          ),
+          ElevatedButton(
+              onPressed: () {
+                print('press');
+              },
+              style: ElevatedButton.styleFrom(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12), 
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  side: const BorderSide(
+                    color: Colors.black,
+                    width: 2
+                  )
+                ),
+              ),
+              child: const Text(
+                'สิ้นสุดการทดสอบ',
+                style: TextStyle(fontSize: 24, color: Colors.black),
+              ))
         ],
       ),
     ));
