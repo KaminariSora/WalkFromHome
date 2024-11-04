@@ -17,45 +17,54 @@ class _TimeCounterState extends State<TimeCounter> {
     return Scaffold(
         // backgroundColor: Colors.blue.shade50,
         body: SafeArea(
-          child: Stack(
-            children: [
-              const SizedBox(height: 80),
-              Positioned(
-                top: 130, // Adjust this value based on how high you want it from the top
-                left: (MediaQuery.of(context).size.width - 322) / 2, // Center it horizontally
-                child: const CustomProgressBar(
-                  width: 322,
-                  height: 31,
-                  progress: 0.1,
-                ),
-              ),
-              Center(
-                child: Container(
-                  width: 328,
-                  height: 360,
-                  color: const Color(0xFFD9D9D9),
-                  child: Transform.translate(
-                    offset: const Offset(-40, -90),
-                    child: Transform.scale(
-                      scale: 1.5,
-                      child: O3D(
-                        src: 'assets/grandpa.glb',
-                        controller: o3dController,
-                        ar: false,
-                        autoPlay: true,
-                        autoRotate: false,
-                        cameraControls: false,
-                        cameraTarget: CameraTarget(-.25, 1.5, 1.5),
-                        cameraOrbit: CameraOrbit(0, 90, 1),
-                      ),
-                    ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(height: 80),
+          const CustomProgressBar(
+            width: 322,
+            height: 31,
+            progress: 0.1,
+          ),
+          Center(
+            child: Container(
+              width: 328,
+              height: 360,
+              color: const Color(0xFFD9D9D9),
+              child: Transform.translate(
+                offset: const Offset(-40, -90),
+                child: Transform.scale(
+                  scale: 1.5,
+                  child: O3D(
+                    src: 'assets/grandpa.glb',
+                    controller: o3dController,
+                    ar: false,
+                    autoPlay: true,
+                    autoRotate: false,
+                    cameraControls: false,
+                    cameraTarget: CameraTarget(-.25, 1.5, 1.5),
+                    cameraOrbit: CameraOrbit(0, 90, 1),
                   ),
                 ),
               ),
-              Container()
-            ],
+            ),
           ),
-        ));
+          const Text(
+            '5.50',
+            style: TextStyle(fontSize: 48),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.black,
+                width: 2
+              )
+            ),
+          )
+        ],
+      ),
+    ));
   }
 }
 
@@ -81,13 +90,9 @@ class CustomProgressBar extends StatelessWidget {
       height: height,
       width: width,
       decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(50.0),
-        border: Border.all(
-          color: Colors.black,
-          width: 1.0
-        )
-      ),
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(50.0),
+          border: Border.all(color: Colors.black, width: 1.0)),
       child: Stack(children: [
         Container(
           width: width * progress,
