@@ -1,4 +1,4 @@
-// ignore: file_names
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:o3d/o3d.dart';
 
@@ -11,93 +11,140 @@ class TimeCounter extends StatefulWidget {
 
 class _TimeCounterState extends State<TimeCounter> {
   O3DController o3dController = O3DController();
+  int _start = 120;
+  final int _initialCountdown = 120; // Store initial countdown for progress calculation
+  Timer? _timer;
+  bool _isRunning = false;
+  double _progress = 1.0;
+
+  void toggleTimer() {
+    if (_isRunning) {
+      _timer?.cancel();
+      setState(() {
+        _isRunning = false;
+      });
+    } else {
+      _isRunning = true;
+      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        if (_start > 0) {
+          setState(() {
+            _start--;
+            progressCalculated(); // Call to update the progress
+          });
+        } else {
+          _timer?.cancel();
+          setState(() {
+            _isRunning = false;
+          });
+        }
+      });
+    }
+  }
+
+  void progressCalculated() {
+    // Calculate the progress as a fraction of the initial countdown
+    setState(() {
+      _progress = _start / _initialCountdown;
+    });
+  }
+
+  String get timeFormatted {
+    final minutes = (_start ~/ 60).toString().padLeft(2, '0');
+    final seconds = (_start % 60).toString().padLeft(2, '0');
+    return '$minutes:$seconds';
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // backgroundColor: Colors.blue.shade50,
-        body: SafeArea(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // const SizedBox(height: 80),
-          const CustomProgressBar(
-            width: 322,
-            height: 31,
-            progress: 0.1,
-          ),
-          const Padding(padding: EdgeInsets.only(bottom: 40)),
-          Center(
-            child: Container(
-              width: 328,
-              height: 360,
-              color: const Color(0xFFD9D9D9),
-              child: Transform.translate(
-                offset: const Offset(-40, -90),
-                child: Transform.scale(
-                  scale: 1.5,
-                  child: O3D(
-                    src: 'assets/grandpa.glb',
-                    controller: o3dController,
-                    ar: false,
-                    autoPlay: true,
-                    autoRotate: false,
-                    cameraControls: false,
-                    cameraTarget: CameraTarget(-.25, 1.5, 1.5),
-                    cameraOrbit: CameraOrbit(0, 90, 1),
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CustomProgressBar(
+              width: 322,
+              height: 31,
+              progress: _progress, // Link progress here
+            ),
+            const Padding(padding: EdgeInsets.only(bottom: 40)),
+            Center(
+              child: Container(
+                width: 328,
+                height: 360,
+                color: const Color(0xFFD9D9D9),
+                child: Transform.translate(
+                  offset: const Offset(-40, -90),
+                  child: Transform.scale(
+                    scale: 1.5,
+                    child: O3D(
+                      src: 'assets/grandpa.glb',
+                      controller: o3dController,
+                      ar: false,
+                      autoPlay: true,
+                      autoRotate: false,
+                      cameraControls: false,
+                      cameraTarget: CameraTarget(-.25, 1.5, 1.5),
+                      cameraOrbit: CameraOrbit(0, 90, 1),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          const Text(
-            '05.50',
-            style: TextStyle(fontSize: 48),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              print('pause');
-            },
-            style: ElevatedButton.styleFrom(
+            Text(
+              '$timeFormatted',
+              style: const TextStyle(fontSize: 48),
+            ),
+            ElevatedButton(
+              onPressed: toggleTimer,
+              style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
                 elevation: 0,
-                shadowColor: Colors.transparent
+                shadowColor: const Color.fromARGB(0, 86, 82, 82),
               ),
-            child: const Icon(
-              Icons.pause,
-              size: 50,
-              color: Colors.black,
+              child: Icon(
+                _isRunning ? Icons.pause : Icons.play_arrow,
+                size: 50,
+                color: Colors.black,
+              ),
             ),
-          ),
-          ElevatedButton(
+            ElevatedButton(
               onPressed: () {
-                print('press');
+                setState(() {
+                  _start = _initialCountdown;
+                  _progress = 1.0; // Reset progress
+                  _timer?.cancel();
+                  _isRunning = false;
+                });
               },
               style: ElevatedButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12), 
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 backgroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
-                  side: const BorderSide(
-                    color: Colors.black,
-                    width: 2
-                  )
+                  side: const BorderSide(color: Colors.black, width: 2),
                 ),
               ),
               child: const Text(
                 'สิ้นสุดการทดสอบ',
                 style: TextStyle(fontSize: 24, color: Colors.black),
-              ))
-        ],
+              ),
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }
 
 class CustomProgressBar extends StatelessWidget {
-  final double progress; // Progress from 0.0 to 1.0
+  final double progress;
   final Color backgroundColor;
   final Color progressColor;
   final double height;
@@ -118,9 +165,10 @@ class CustomProgressBar extends StatelessWidget {
       height: height,
       width: width,
       decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(50.0),
-          border: Border.all(color: Colors.black, width: 1.0)),
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(50.0),
+        border: Border.all(color: Colors.black, width: 1.0),
+      ),
       child: Stack(children: [
         Container(
           width: width * progress,
