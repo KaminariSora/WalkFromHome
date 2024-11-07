@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
-import 'timeCounter.dart';
+import 'CalibratePopup.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyApp()); // Ensure this wraps with MaterialApp in MyApp
+}
+
+void showCalibratePopup(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return const Dialog(
+        backgroundColor: Colors.transparent,
+        child: Calibratepopup(),
+      );
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -10,8 +22,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: TimeCounter(),
+    // MaterialApp at the root of the widget tree
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(title: const Text("Floating Popup Example")),
+        body: Center(
+          child: ElevatedButton(
+            onPressed: () {
+              showCalibratePopup(context);
+            },
+            child: const Text('Show Popup'),
+          ),
+        ),
+      ),
     );
   }
 }
