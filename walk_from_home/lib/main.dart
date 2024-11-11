@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
 import 'timeCounter.dart';
 import 'Description_Pass.dart';
+import 'CalibratePopup.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyApp()); // Ensure this wraps with MaterialApp in MyApp
+}
+
+void showCalibratePopup(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return const Dialog(
+        backgroundColor: Colors.transparent,
+        child: Calibratepopup(),
+      );
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
