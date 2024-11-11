@@ -98,7 +98,7 @@ class _TimeCounterState extends State<TimeCounter> {
               ),
             ),
             Text(
-              '$timeFormatted',
+              timeFormatted,
               style: const TextStyle(fontSize: 48),
             ),
             ElevatedButton(
