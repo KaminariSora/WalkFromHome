@@ -40,48 +40,53 @@ class DescriptionPassState extends State<DescriptionPass> {
       appBar: AppBar(
         title: const Text('คำอธิบาย'),
       ),
-      body: Align(
-        alignment: Alignment.topCenter,
-        child: Container(
-          alignment: Alignment.center,
-          width: 352,
-          height: 671,
-          margin: EdgeInsets.only(top: 44),
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.black,
-              width: 1.5,
-            ),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Text(
-                    description,
-                    style: const TextStyle(fontSize: 16),
-                  ),
+      body: Column(
+        children: [
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              alignment: Alignment.center,
+              width: 352,
+              height: 671,
+              margin: EdgeInsets.only(top: 44),
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black,
+                  width: 1.5,
                 ),
+                borderRadius: BorderRadius.circular(10),
               ),
-              Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Checkbox(
-                    value: isChecked,
-                    onChanged: (value) {
-                      setState(() {
-                        isChecked = value ?? false;
-                      });
-                    },
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Text(
+                        description,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ),
                   ),
-                  const Text('ฉันได้อ่านคำอธิบายทั้งหมดแล้ว'),
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: isChecked,
+                        onChanged: (value) {
+                          setState(() {
+                            isChecked = value ?? false;
+                          });
+                        },
+                      ),
+                      const Text('ฉันได้อ่านคำอธิบายทั้งหมดแล้ว'),
+                    ],
+                  ),
                 ],
               ),
-            ],
+            ),
           ),
-        ),
+          Container(child: Text('data'),)
+        ],
       ),
     );
   }
