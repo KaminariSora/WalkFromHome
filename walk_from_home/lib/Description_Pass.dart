@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/timeCounter.dart';
 import 'NavigationButton.dart';
+import 'Fill_infromation.dart';
 
 class DescriptionPass extends StatefulWidget {
   const DescriptionPass({super.key});
@@ -51,7 +51,7 @@ class DescriptionPassState extends State<DescriptionPass> {
               alignment: Alignment.center,
               width: 352,
               height: MediaQuery.of(context).size.height * 0.74,
-              margin: EdgeInsets.only(top: 24),
+              margin: const EdgeInsets.only(top: 24),
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 border: Border.all(
@@ -91,7 +91,7 @@ class DescriptionPassState extends State<DescriptionPass> {
           Navigationbutton(
             onForwardPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const TimeCounter()));
+                  MaterialPageRoute(builder: (context) => const fillinfrom()));
             },
             onBackPressed: () {
               SystemNavigator.pop();

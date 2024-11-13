@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'NavigationButton.dart';
+import 'timeCounter.dart';
 
 // void main() {
 //   runApp(MaterialApp(
@@ -273,6 +275,15 @@ class _fillinfromState extends State<fillinfrom> {
                   ),
                 ),
               ],
+            ),
+            Navigationbutton(
+              onForwardPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const TimeCounter()));
+            },
+            onBackPressed: () {
+              Navigator.pop(context);
+            },
             )
           ],
         ),
