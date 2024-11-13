@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'NavigationButton.dart';
 
 class DescriptionPass extends StatefulWidget {
   const DescriptionPass({super.key});
@@ -47,8 +48,8 @@ class DescriptionPassState extends State<DescriptionPass> {
             child: Container(
               alignment: Alignment.center,
               width: 352,
-              height: 671,
-              margin: EdgeInsets.only(top: 44),
+              height: MediaQuery.of(context).size.height * 0.74,
+              margin: EdgeInsets.only(top: 24),
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 border: Border.all(
@@ -85,7 +86,7 @@ class DescriptionPassState extends State<DescriptionPass> {
               ),
             ),
           ),
-          Container(child: Text('data'),)
+          const Navigationbutton()
         ],
       ),
     );

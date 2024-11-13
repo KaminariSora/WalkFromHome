@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'timeCounter.dart';
 import 'Description_Pass.dart';
 import 'CalibratePopup.dart';
+import 'NavigationButton.dart';
 
 void main() {
   runApp(const MyApp()); // Ensure this wraps with MaterialApp in MyApp
