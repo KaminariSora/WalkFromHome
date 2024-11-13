@@ -3,6 +3,7 @@ import 'package:flutter_application_1/Fill_infromation.dart';
 import 'timeCounter.dart';
 import 'Description_Pass.dart';
 import 'CalibratePopup.dart';
+import 'InfromationSteps.dart';
 
 void main() {
   runApp(const MyApp()); // Ensure this wraps with MaterialApp in MyApp
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: fillinfrom(),
+      home: Infromationsteps(),
     );
   }
 }
