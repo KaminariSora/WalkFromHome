@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_application_1/timeCounter.dart';
 import 'NavigationButton.dart';
 
 class DescriptionPass extends StatefulWidget {
@@ -86,7 +88,15 @@ class DescriptionPassState extends State<DescriptionPass> {
               ),
             ),
           ),
-          const Navigationbutton()
+          Navigationbutton(
+            onForwardPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const TimeCounter()));
+            },
+            onBackPressed: () {
+              SystemNavigator.pop();
+            },
+          )
         ],
       ),
     );

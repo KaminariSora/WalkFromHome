@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/timeCounter.dart';
+import 'timeCounter.dart';
 
 class Navigationbutton extends StatelessWidget {
-  // Constructor (optional parameters can be added here)
-  const Navigationbutton({Key? key}) : super(key: key);
+  final VoidCallback? onBackPressed; // Action for the back button
+  final VoidCallback? onForwardPressed; // Action for the forward button
+
+  const Navigationbutton({
+    Key? key,
+    this.onBackPressed,
+    this.onForwardPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +21,7 @@ class Navigationbutton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ElevatedButton(
-              onPressed: () {},
+              onPressed: onBackPressed,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
                 elevation: 0,
@@ -29,7 +37,7 @@ class Navigationbutton extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: onForwardPressed,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
                 elevation: 0,
