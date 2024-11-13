@@ -67,6 +67,9 @@ flutter:
     - assets/
     - assets/icons/men.png
     - assets/icons/female.png
+    - assets/icons/walkslow.png
+    - assets/icons/walknormal.png
+    - assets/icons/walkfast.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
