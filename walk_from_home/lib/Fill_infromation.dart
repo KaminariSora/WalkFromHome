@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'NavigationButton.dart';
 import 'timeCounter.dart';
+import 'InfromationSteps.dart';
 
 // void main() {
 //   runApp(MaterialApp(
@@ -279,7 +280,7 @@ class _fillinfromState extends State<fillinfrom> {
             Navigationbutton(
               onForwardPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const TimeCounter()));
+                  MaterialPageRoute(builder: (context) => const Infromationsteps()));
             },
             onBackPressed: () {
               Navigator.pop(context);

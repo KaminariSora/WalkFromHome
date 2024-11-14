@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/NavigationButton.dart';
+import 'package:flutter_application_1/timeCounter.dart';
 
 class Testbeforestart extends StatefulWidget {
   const Testbeforestart({super.key});
@@ -280,6 +282,15 @@ class _TestbeforestartState extends State<Testbeforestart> {
                 ),
               ),
             ],
+          ),
+          Navigationbutton(
+            onForwardPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const TimeCounter()));
+            },
+            onBackPressed: () {
+              Navigator.pop(context);
+            },
           )
         ],
       ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'NavigationButton.dart';
+import 'TestBeforeStart.dart';
 
 class Infromationsteps extends StatefulWidget {
   const Infromationsteps({super.key});
@@ -311,6 +313,17 @@ class _InfromationstepsState extends State<Infromationsteps> {
               ),
             ],
           ),
+          Navigationbutton(
+            onForwardPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Testbeforestart()));
+            },
+            onBackPressed: () {
+              Navigator.pop(context);
+            },
+          )
         ],
       ),
     );
