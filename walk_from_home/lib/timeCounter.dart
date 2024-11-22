@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:o3d/o3d.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class TimeCounter extends StatefulWidget {
   const TimeCounter({super.key});
@@ -11,11 +12,13 @@ class TimeCounter extends StatefulWidget {
 
 class _TimeCounterState extends State<TimeCounter> {
   O3DController o3dController = O3DController();
-  int _start = 120;
-  final int _initialCountdown = 120; // Store initial countdown for progress calculation
+  int _start = 10;
+  final int _initialCountdown = 10; // Store initial countdown for progress calculation
   Timer? _timer;
   bool _isRunning = false;
   double _progress = 1.0;
+  final FlutterTts _flutterTts = FlutterTts();
+  bool _ttsTriggered = false;
 
   void toggleTimer() {
     if (_isRunning) {
@@ -25,6 +28,7 @@ class _TimeCounterState extends State<TimeCounter> {
       });
     } else {
       _isRunning = true;
+      _ttsTriggered = false;
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
         if (_start > 0) {
           setState(() {
@@ -36,6 +40,10 @@ class _TimeCounterState extends State<TimeCounter> {
           setState(() {
             _isRunning = false;
           });
+        }
+        if (_start == 5){
+          _ttsTriggered = true;
+          _flutterTts.speak("Five minutes remaining.");
         }
       });
     }
