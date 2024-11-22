@@ -12,8 +12,8 @@ class TimeCounter extends StatefulWidget {
 
 class _TimeCounterState extends State<TimeCounter> {
   O3DController o3dController = O3DController();
-  int _start = 10;
-  final int _initialCountdown = 10; // Store initial countdown for progress calculation
+  int _start = 600;
+  final int _initialCountdown = 600; // Store initial countdown for progress calculation
   Timer? _timer;
   bool _isRunning = false;
   double _progress = 1.0;
@@ -41,9 +41,14 @@ class _TimeCounterState extends State<TimeCounter> {
             _isRunning = false;
           });
         }
-        if (_start == 5){
+        if (_start == 60){
           _ttsTriggered = true;
-          _flutterTts.speak("Five minutes remaining.");
+          _flutterTts.speak("เหลือเวลาอีก 1 นาที");
+          _ttsTriggered = false;
+        } else if (_start == 0) {
+          _ttsTriggered = true;
+          _flutterTts.speak("ยินดีด้วย คุณเดินครบเวลาที่กำหนดแล้ว");
+          _ttsTriggered = false;
         }
       });
     }
