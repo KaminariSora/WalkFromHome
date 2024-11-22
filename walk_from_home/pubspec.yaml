@@ -71,6 +71,13 @@ flutter:
     - assets/icons/walkslow.png
     - assets/icons/walknormal.png
     - assets/icons/walkfast.png
+    - assets/icons/heart-pulse.png
+    - assets/feeling/1.png
+    - assets/feeling/2.png
+    - assets/feeling/3.png
+    - assets/feeling/4.png
+    - assets/feeling/5.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
