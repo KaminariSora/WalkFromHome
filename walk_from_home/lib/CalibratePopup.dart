@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'InfromationSteps.dart';
+import 'timeCounter.dart';
 
 class Calibratepopup extends StatefulWidget {
   const Calibratepopup({super.key});
@@ -82,9 +83,9 @@ class _CalibratepopupState extends State<Calibratepopup> {
                 ),
               ),
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  // Navigator.push(context,
-                  //   MaterialPageRoute(builder: (context) => const Infromationsteps()));
+                  // Navigator.of(context).pop();
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const TimeCounter()));
                 },
                 child: const Text(
                   "ข้าม",

@@ -1,7 +1,6 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'NavigationButton.dart';
-import 'timeCounter.dart';
-import 'InfromationSteps.dart';
 import 'CalibratePopup.dart';
 
 // void main() {

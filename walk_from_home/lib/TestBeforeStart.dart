@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/NavigationButton.dart';
@@ -51,9 +52,9 @@ class _TestbeforestartState extends State<Testbeforestart> {
               ),
             ],
           ),
-          SizedBox(height: 41),
+          const SizedBox(height: 41),
           Container(
-            margin: EdgeInsets.only(left: 40),
+            margin: const EdgeInsets.only(left: 40),
             alignment: Alignment.centerLeft,
             child: const Text(
               "คุณเป็นคนเดินช้าหรือเร็ว",

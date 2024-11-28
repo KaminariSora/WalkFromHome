@@ -1,25 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Fill_infromation.dart';
-import 'package:flutter_application_1/TestBeforeStart.dart';
-import 'timeCounter.dart';
 import 'Description_Pass.dart';
-import 'CalibratePopup.dart';
-import 'NavigationButton.dart';
 
 void main() {
   runApp(const MyApp()); // Ensure this wraps with MaterialApp in MyApp
-}
-
-void showCalibratePopup(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return const Dialog(
-        backgroundColor: Colors.transparent,
-        child: Calibratepopup(),
-      );
-    },
-  );
 }
 
 class MyApp extends StatelessWidget {
