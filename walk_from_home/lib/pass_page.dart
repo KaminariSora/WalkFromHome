@@ -45,13 +45,12 @@ class PassPage extends StatelessWidget {
               ),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.black,
-                backgroundColor: Colors.white, // กำหนดสีข้อความบนปุ่ม
+                backgroundColor: Colors.white,
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                   side: BorderSide(
-                    // กำหนดเส้นกรอบ
-                    color: Colors.black, // สีของเส้นกรอบ
+                    color: Colors.black,
                     width: 2,
                   ),
                 ),
