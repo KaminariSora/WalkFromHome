@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/NavigationButton.dart';
 import 'package:flutter_application_1/timeCounter.dart';
@@ -30,18 +31,24 @@ class _TestbeforestartState extends State<Testbeforestart> {
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(height: 100),
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                "แบบสอบถามก่อนเริ่มการทดสอบ",
-                style: TextStyle(
-                  fontSize: 26,
-                  fontFamily: 'prompt',
+              Expanded(
+                child: AutoSizeText(
+                  "แบบสอบถามก่อนเริ่มทำการทดสอบ",
+                  style: TextStyle(
+                    fontSize: 26, // Maximum font size
+                    fontFamily: 'prompt',
+                  ),
+                  maxLines: 1, // Maximum number of lines
+                  minFontSize: 12, // Minimum font size
+                  textAlign: TextAlign.center, // Center-align text
                 ),
-              )
+              ),
             ],
           ),
           SizedBox(height: 41),
@@ -89,7 +96,7 @@ class _TestbeforestartState extends State<Testbeforestart> {
                       const Text(
                         'ช้า',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 23,
                           fontFamily: 'prompt',
                           color: Colors.black,
                         ),
@@ -127,7 +134,7 @@ class _TestbeforestartState extends State<Testbeforestart> {
                       const Text(
                         'ปกติ',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 23,
                           fontFamily: 'prompt',
                           color: Colors.black,
                         ),
@@ -165,7 +172,7 @@ class _TestbeforestartState extends State<Testbeforestart> {
                       const Text(
                         'เร็ว',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 23,
                           fontFamily: 'prompt',
                           color: Colors.black,
                         ),

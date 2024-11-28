@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'NavigationButton.dart';
 import 'TestBeforeStart.dart';
@@ -47,11 +48,16 @@ class _InfromationstepsState extends State<Infromationsteps> {
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                "แบบสอบถามเพื่อปรับเทียบระยะก้าว",
-                style: TextStyle(
-                  fontSize: 26,
-                  fontFamily: 'prompt',
+              Expanded(
+                child: AutoSizeText(
+                  "แบบสอบถามเพื่อปรับเทียบระยะก้าว",
+                  style: TextStyle(
+                    fontSize: 26, // Maximum font size
+                    fontFamily: 'prompt',
+                  ),
+                  maxLines: 1, // Maximum number of lines
+                  minFontSize: 12, // Minimum font size
+                  textAlign: TextAlign.center, // Center-align text
                 ),
               ),
             ],
@@ -88,14 +94,19 @@ class _InfromationstepsState extends State<Infromationsteps> {
                     ),
                     Row(
                       children: [
-                        Text(
-                          "ในการตั้งค่าระยะก้าว",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'prompt',
+                        Expanded(
+                          child: AutoSizeText(
+                            "ในการตั้งค่าระยะก้าว",
+                            style: TextStyle(
+                              fontSize: 22, // Maximum font size
+                              fontFamily: 'prompt',
+                            ),
+                            maxLines: 1, // Maximum number of lines
+                            minFontSize: 13, // Minimum font size
+                            textAlign: TextAlign.center, // Center-align text
                           ),
                         ),
-                        SizedBox(width: 17),
+                        // SizedBox(width: 17),
                         SizedBox(
                           width: 85,
                           child: TextField(
@@ -105,13 +116,15 @@ class _InfromationstepsState extends State<Infromationsteps> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 17),
-                        Text(
+                        AutoSizeText(
                           "เมตร",
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 20, // Maximum font size
                             fontFamily: 'prompt',
                           ),
+                          maxLines: 1, // Maximum number of lines
+                          minFontSize: 12, // Minimum font size
+                          textAlign: TextAlign.center, // Center-align text
                         ),
                       ],
                     ),
@@ -150,11 +163,16 @@ class _InfromationstepsState extends State<Infromationsteps> {
                     ),
                     Row(
                       children: [
-                        Text(
-                          "ในการตั้งค่าระยะก้าว",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'prompt',
+                        Expanded(
+                          child: AutoSizeText(
+                            "ในการตั้งค่าระยะก้าว",
+                            style: TextStyle(
+                              fontSize: 26, // Maximum font size
+                              fontFamily: 'prompt',
+                            ),
+                            maxLines: 1, // Maximum number of lines
+                            minFontSize: 12, // Minimum font size
+                            textAlign: TextAlign.center, // Center-align text
                           ),
                         ),
                         SizedBox(width: 17),
@@ -184,7 +202,7 @@ class _InfromationstepsState extends State<Infromationsteps> {
           ),
           const SizedBox(height: 37),
           Container(
-            margin: EdgeInsets.only(left: 40),
+            margin: const EdgeInsets.only(left: 40),
             alignment: Alignment.centerLeft,
             child: const Text(
               "คุณเป็นคนเดินช้าหรือเร็ว",
@@ -199,7 +217,7 @@ class _InfromationstepsState extends State<Infromationsteps> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
+              SizedBox(
                 width: 104,
                 height: 150,
                 child: TextButton(
@@ -226,7 +244,7 @@ class _InfromationstepsState extends State<Infromationsteps> {
                       const Text(
                         'ช้า',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 23,
                           fontFamily: 'prompt',
                           color: Colors.black,
                         ),
@@ -237,7 +255,7 @@ class _InfromationstepsState extends State<Infromationsteps> {
               ),
               const SizedBox(width: 17),
               //ปุ่มเดินปกติ
-              Container(
+              SizedBox(
                 width: 104,
                 height: 150,
                 child: TextButton(
@@ -264,7 +282,7 @@ class _InfromationstepsState extends State<Infromationsteps> {
                       const Text(
                         'ปกติ',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 23,
                           fontFamily: 'prompt',
                           color: Colors.black,
                         ),
@@ -275,7 +293,7 @@ class _InfromationstepsState extends State<Infromationsteps> {
               ),
               const SizedBox(width: 17),
               //ปุ่มเดินเร็ว
-              Container(
+              SizedBox(
                 width: 104,
                 height: 150,
                 child: TextButton(
@@ -302,7 +320,7 @@ class _InfromationstepsState extends State<Infromationsteps> {
                       const Text(
                         'เร็ว',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 23,
                           fontFamily: 'prompt',
                           color: Colors.black,
                         ),
