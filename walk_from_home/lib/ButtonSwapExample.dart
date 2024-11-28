@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class ButtonSwapExample extends StatefulWidget {
@@ -13,96 +14,114 @@ class ButtonSwapExample extends StatefulWidget {
 class _ButtonSwapExampleState extends State<ButtonSwapExample> {
   // รายการของภาพที่ใช้ในปุ่ม
   List<String> imagePaths = [
-    'assets/feeling/1.png', // ใช้ภาพสำหรับ Button 1
-    'assets/feeling/2.png', // ใช้ภาพสำหรับ Button 2
-    'assets/feeling/3.png', // ใช้ภาพสำหรับ Button 3
-    'assets/feeling/4.png', // ใช้ภาพสำหรับ Button 4
-    'assets/feeling/5.png', // ใช้ภาพสำหรับ Button 5
+    'assets/feeling/1.png',
+    'assets/feeling/2.png',
+    'assets/feeling/3.png',
+    'assets/feeling/4.png',
+    'assets/feeling/5.png',
+  ];
+
+  // รายการของข้อความที่สัมพันธ์กับภาพ
+  List<String> buttonTexts = [
+    'ไม่เหนื่อยเลย', // สำหรับ Button 1
+    'เหนื่อยเล็กน้อย', // สำหรับ Button 2
+    'เหนื่อยปานกลาง', // สำหรับ Button 3
+    'เหนื่อยมาก', // สำหรับ Button 4
+    'เหนื่อยจนหมดแรง', // สำหรับ Button 5
   ];
 
   void swapMainButton(int index) {
     setState(() {
-      // สลับตำแหน่งระหว่าง main button กับปุ่มที่กด
-      final temp = imagePaths[0];
+      // สลับภาพ
+      final tempImage = imagePaths[0];
       imagePaths[0] = imagePaths[index];
-      imagePaths[index] = temp;
+      imagePaths[index] = tempImage;
 
-      // จัดเรียงปุ่มที่เหลือ
+      // สลับข้อความ
+      final tempText = buttonTexts[0];
+      buttonTexts[0] = buttonTexts[index];
+      buttonTexts[index] = tempText;
+
+      // จัดเรียงใหม่ตามลำดับตัวอักษร (เลือกกรณีนี้หากต้องการ)
       imagePaths = [
         imagePaths[0],
         ...imagePaths.sublist(1)..sort((a, b) => a.compareTo(b)),
+      ];
+      buttonTexts = [
+        buttonTexts[0],
+        ...buttonTexts.sublist(1)..sort((a, b) => a.compareTo(b)),
       ];
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Dynamic Button Swap")),
-      body: Center(
-        child: SizedBox(
-          width: 340,
-          height: 300,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              // Main button (center)
-              Positioned(
-                top: 20,
-                child: SizedBox(
-                  width: 120,
-                  height: 160,
-                  child: Column(
-                    children: [
-                      IconButton(
-                        onPressed: null, // Disabled by default
-                        icon: Image.asset(
-                          imagePaths[0],
-                          fit: BoxFit.cover,
+    return SizedBox(
+        width: 340,
+        height: 300,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            // Main button (center)
+            Positioned(
+              top: 20,
+              child: SizedBox(
+                width: 120,
+                height: 160,
+                child: Column(
+                  children: [
+                    IconButton(
+                      onPressed: null, // Disabled by default
+                      icon: Image.asset(
+                        imagePaths[0],
+                        fit: BoxFit.cover,
+                      ),
+                      iconSize: 100,
+                      padding: EdgeInsets.zero,
+                    ),
+                    Expanded(
+                      child: AutoSizeText(
+                        buttonTexts[0],
+                        style: const TextStyle(
+                          fontSize: 26, // Maximum font size
+                          fontFamily: 'prompt',
                         ),
-                        iconSize: 100,
-                        padding: EdgeInsets.zero,
+                        maxLines: 1, // Maximum number of lines
+                        minFontSize: 10, // Minimum font size
+                        textAlign: TextAlign.center, // Center-align text
                       ),
-                      const Text(
-                        'ไม่เหนื่อยเลย',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight
-                                .bold), // Customize text style as needed
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              // Surrounding buttons
-              Positioned(
-                left: 5,
-                top: 110,
-                child: buildCircleButton(1, "เหนื่อยเล็กน้อย"),
-              ),
-              Positioned(
-                bottom: 0,
-                left: 70,
-                child: buildCircleButton(2, "เหนื่อยปานกลาง"),
-              ),
-              Positioned(
-                bottom: 0,
-                right: 70,
-                child: buildCircleButton(3, "เหนื่อยมาก"),
-              ),
-              Positioned(
-                right: 5,
-                top: 110,
-                child: buildCircleButton(4, "เหนื่อยจนหมดแรง"),
-              ),
-            ],
-          ),
+            ),
+            // Surrounding buttons
+            Positioned(
+              left: 5,
+              top: 110,
+              child: buildCircleButton(1),
+            ),
+            Positioned(
+              bottom: 0,
+              left: 70,
+              child: buildCircleButton(2),
+            ),
+            Positioned(
+              bottom: 0,
+              right: 70,
+              child: buildCircleButton(3),
+            ),
+            Positioned(
+              right: 5,
+              top: 110,
+              child: buildCircleButton(4),
+            ),
+          ],
         ),
-      ),
-    );
+      );
   }
 
-  Widget buildCircleButton(int index, String levettired) {
+  Widget buildCircleButton(int index) {
     return SizedBox(
       width: 100,
       height: 100,
@@ -121,13 +140,21 @@ class _ButtonSwapExampleState extends State<ButtonSwapExample> {
               padding: EdgeInsets.zero,
             ),
           ),
-          Text(
-            levettired,
-            style:
-                const TextStyle(fontSize: 12), // Customize text style as needed
+          Expanded(
+            child: AutoSizeText(
+              buttonTexts[index], // ข้อความตรงกับ index ของปุ่ม
+              style: const TextStyle(
+                fontSize: 15, // Maximum font size
+                fontFamily: 'prompt',
+              ),
+              maxLines: 1, // Maximum number of lines
+              minFontSize: 10, // Minimum font size
+              textAlign: TextAlign.center, // Center-align text
+            ),
           ),
         ],
       ),
     );
   }
 }
+
