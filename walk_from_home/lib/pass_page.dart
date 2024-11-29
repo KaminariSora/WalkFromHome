@@ -1,4 +1,7 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/timeCounter.dart';
+import 'timeCounter.dart';
 
 class PassPage extends StatelessWidget {
   const PassPage({super.key});
@@ -7,80 +10,85 @@ class PassPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // ไอคอนเครื่องหมายถูก
-            Icon(
-              Icons.check_circle_outline,
-              size: 320.0,
-              color: Colors.black,
-            ),
-            SizedBox(height: 40),
-            // ข้อความ
-
-            Container(
-              padding: EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black, width: 1.5),
-                borderRadius: BorderRadius.circular(20),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+              Icon(
+                Icons.check_circle_outline,
+                size: MediaQuery.of(context).size.width * 0.7,
+                color: Colors.black,
               ),
-              child: Text(
-                'ร่างกายของคุณปกติ\nสามารถทำการทดสอบได้',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 32, fontFamily: 'prompt'),
-              ),
-            ),
-            SizedBox(height: 120),
-
-            // ปุ่ม "เริ่มทดสอบ"
-            ElevatedButton(
-              onPressed: () {
-                // เริ่มทดสอบ
-              },
-              child: Text(
-                'เริ่มการทดสอบ',
-                style: TextStyle(fontSize: 28, fontFamily: 'prompt'),
-              ),
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.black,
-                backgroundColor: Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                shape: RoundedRectangleBorder(
+              Container(
+                padding: const EdgeInsets.all(16.0),
+                margin: const EdgeInsets.all(16.0),
+                height: MediaQuery.of(context).size.height * 0.25,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1.5),
                   borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(
-                    color: Colors.black,
-                    width: 2,
+                ),
+                child: const Center(
+                  child: AutoSizeText(
+                    'ร่างกายของคุณปกติ\n สามารถทำการทดสอบได้',
+                    style: TextStyle(
+                      fontSize: 26,
+                      fontFamily: 'prompt',
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    minFontSize: 12,
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 30),
-            // ปุ่ม "ย้อนกลับ"
-            TextButton(
-              onPressed: () {
-                // ย้อนกลับ
-              },
-              child: Text(
-                'ย้อนกลับ',
-                style: TextStyle(fontSize: 28, fontFamily: 'prompt'),
-              ),
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.black,
-                backgroundColor: Colors.white, // กำหนดสีข้อความบนปุ่ม
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(
-                    // กำหนดเส้นกรอบ
-                    color: Colors.black, // สีของเส้นกรอบ
-                    width: 2,
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const TimeCounter()));
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  backgroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: const BorderSide(
+                      color: Colors.black,
+                      width: 2,
+                    ),
                   ),
                 ),
+                child: const Text(
+                  'เริ่มการทดสอบ',
+                  style: TextStyle(fontSize: 28, fontFamily: 'prompt'),
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 30),
+              // ปุ่ม "ย้อนกลับ"
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  backgroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: const BorderSide(
+                      color: Colors.black,
+                      width: 2,
+                    ),
+                  ),
+                ),
+                child: const Text(
+                  'ย้อนกลับ',
+                  style: TextStyle(fontSize: 28, fontFamily: 'prompt'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
