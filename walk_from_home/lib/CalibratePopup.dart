@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/TestBeforeStart.dart';
 import 'InfromationSteps.dart';
 import 'timeCounter.dart';
+import 'pass_page.dart';
+import 'notpass_page.dart';
 
 class Calibratepopup extends StatefulWidget {
   const Calibratepopup({super.key});
@@ -85,7 +88,7 @@ class _CalibratepopupState extends State<Calibratepopup> {
                 onPressed: () {
                   // Navigator.of(context).pop();
                   Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const TimeCounter()));
+                    MaterialPageRoute(builder: (context) => const Testbeforestart()));
                 },
                 child: const Text(
                   "ข้าม",
