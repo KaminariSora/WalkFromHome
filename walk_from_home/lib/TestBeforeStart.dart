@@ -2,7 +2,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/NavigationButton.dart';
-import 'package:flutter_application_1/timeCounter.dart';
+import 'pass_page.dart';
 
 class Testbeforestart extends StatefulWidget {
   const Testbeforestart({super.key});
@@ -294,7 +294,7 @@ class _TestbeforestartState extends State<Testbeforestart> {
           Navigationbutton(
             onForwardPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const TimeCounter()));
+                  MaterialPageRoute(builder: (context) => const PassPage()));
             },
             onBackPressed: () {
               Navigator.pop(context);

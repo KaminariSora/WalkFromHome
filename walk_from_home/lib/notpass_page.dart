@@ -35,7 +35,9 @@ class notPassPage extends StatelessWidget {
             SizedBox(height: 30),
             // ปุ่ม "ย้อนกลับ"
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
               child: Text(
                 'ย้อนกลับ',
                 style: TextStyle(fontSize: 28, fontFamily: 'prompt'),
