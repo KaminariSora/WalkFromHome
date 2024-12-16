@@ -31,6 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   vector_math: ^2.1.0
+  flutter_tts: ^3.6.2
+  auto_size_text: ^3.0.0
 
   cupertino_icons: ^1.0.2
   o3d: ^3.1.2
@@ -67,6 +69,16 @@ flutter:
     - assets/
     - assets/icons/men.png
     - assets/icons/female.png
+    - assets/icons/walkslow.png
+    - assets/icons/walknormal.png
+    - assets/icons/walkfast.png
+    - assets/icons/heart-pulse.png
+    - assets/feeling/1.png
+    - assets/feeling/2.png
+    - assets/feeling/3.png
+    - assets/feeling/4.png
+    - assets/feeling/5.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

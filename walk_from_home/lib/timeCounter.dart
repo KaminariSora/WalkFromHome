@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:o3d/o3d.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'Evaluation.dart';
 
 class TimeCounter extends StatefulWidget {
   const TimeCounter({super.key});
@@ -11,11 +13,13 @@ class TimeCounter extends StatefulWidget {
 
 class _TimeCounterState extends State<TimeCounter> {
   O3DController o3dController = O3DController();
-  int _start = 120;
-  final int _initialCountdown = 120; // Store initial countdown for progress calculation
+  int _start = 360;
+  final int _initialCountdown = 360; // Store initial countdown for progress calculation
   Timer? _timer;
   bool _isRunning = false;
   double _progress = 1.0;
+  final FlutterTts _flutterTts = FlutterTts();
+  bool _ttsTriggered = false;
 
   void toggleTimer() {
     if (_isRunning) {
@@ -25,11 +29,12 @@ class _TimeCounterState extends State<TimeCounter> {
       });
     } else {
       _isRunning = true;
+      _ttsTriggered = false;
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
         if (_start > 0) {
           setState(() {
             _start--;
-            progressCalculated(); // Call to update the progress
+            progressCalculated();
           });
         } else {
           _timer?.cancel();
@@ -37,12 +42,20 @@ class _TimeCounterState extends State<TimeCounter> {
             _isRunning = false;
           });
         }
+        if (_start == 60){
+          _ttsTriggered = true;
+          _flutterTts.speak("เหลือเวลาอีก 1 นาที");
+          _ttsTriggered = false;
+        } else if (_start == 0) {
+          _ttsTriggered = true;
+          _flutterTts.speak("ยินดีด้วย คุณเดินครบเวลาที่กำหนดแล้ว");
+          _ttsTriggered = false;
+        }
       });
     }
   }
 
   void progressCalculated() {
-    // Calculate the progress as a fraction of the initial countdown
     setState(() {
       _progress = _start / _initialCountdown;
     });
@@ -71,7 +84,7 @@ class _TimeCounterState extends State<TimeCounter> {
             CustomProgressBar(
               width: 322,
               height: 31,
-              progress: _progress, // Link progress here
+              progress: _progress,
             ),
             const Padding(padding: EdgeInsets.only(bottom: 40)),
             Center(
@@ -122,6 +135,8 @@ class _TimeCounterState extends State<TimeCounter> {
                   _timer?.cancel();
                   _isRunning = false;
                 });
+                Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const EvaluationPage()));
               },
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
