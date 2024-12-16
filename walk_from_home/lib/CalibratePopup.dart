@@ -49,20 +49,17 @@ class _CalibratepopupState extends State<Calibratepopup> {
               width: MediaQuery.of(context).size.width * 0.4,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                shadowColor: const Color.fromARGB(0, 86, 82, 82),
-                side: const BorderSide(color: Colors.black, width: 1),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15), // Rounded corners
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: const Color.fromARGB(0, 86, 82, 82),
+                  side: const BorderSide(color: Colors.black, width: 1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15), // Rounded corners
+                  ),
                 ),
-              ),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Infromationsteps()));
+                  Navigator.pushNamed(context, '/infromatoinStep');
                 },
                 child: const Text(
                   "ปรับเทียบ",
@@ -77,18 +74,17 @@ class _CalibratepopupState extends State<Calibratepopup> {
               width: MediaQuery.of(context).size.width * 0.4,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                shadowColor: const Color.fromARGB(0, 86, 82, 82),
-                side: const BorderSide(color: Colors.black, width: 1),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15), // Rounded corners
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: const Color.fromARGB(0, 86, 82, 82),
+                  side: const BorderSide(color: Colors.black, width: 1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15), // Rounded corners
+                  ),
                 ),
-              ),
                 onPressed: () {
-                  // Navigator.of(context).pop();
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Testbeforestart()));
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(context, '/Testbeforestart');
                 },
                 child: const Text(
                   "ข้าม",

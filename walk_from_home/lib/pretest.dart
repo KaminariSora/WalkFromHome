@@ -97,10 +97,7 @@ class _PretestState extends State<Pretest> {
                 const ButtonSwapExample(),
                 Navigationbutton(
                   onForwardPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const fillinfrom()));
+                    Navigator.pushNamed(context, '/Fillinfrom');
                   },
                   onBackPressed: () {
                     Navigator.pop(context);

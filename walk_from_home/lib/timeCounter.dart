@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:o3d/o3d.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'Evaluation.dart';
 
 class TimeCounter extends StatefulWidget {
   const TimeCounter({super.key});
@@ -14,7 +13,8 @@ class TimeCounter extends StatefulWidget {
 class _TimeCounterState extends State<TimeCounter> {
   O3DController o3dController = O3DController();
   int _start = 360;
-  final int _initialCountdown = 360; // Store initial countdown for progress calculation
+  final int _initialCountdown =
+      360; // Store initial countdown for progress calculation
   Timer? _timer;
   bool _isRunning = false;
   double _progress = 1.0;
@@ -42,7 +42,7 @@ class _TimeCounterState extends State<TimeCounter> {
             _isRunning = false;
           });
         }
-        if (_start == 60){
+        if (_start == 60) {
           _ttsTriggered = true;
           _flutterTts.speak("เหลือเวลาอีก 1 นาที");
           _ttsTriggered = false;
@@ -135,11 +135,11 @@ class _TimeCounterState extends State<TimeCounter> {
                   _timer?.cancel();
                   _isRunning = false;
                 });
-                Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const EvaluationPage()));
+                Navigator.pushNamed(context, '/EvaluationPage');
               },
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 backgroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
