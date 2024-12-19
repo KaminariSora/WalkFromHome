@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Accelrometer_sensor/Distance.dart';
+import 'Accelrometer_sensor/Accelorator.dart';
 import 'Description_Pass.dart';
+import 'timeCounter.dart';
 
 void main() {
   runApp(const MyApp()); // Ensure this wraps with MaterialApp in MyApp
@@ -11,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: DescriptionPass(),
+      home: TimeCounter(),
     );
   }
 }
