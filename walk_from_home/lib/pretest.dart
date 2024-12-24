@@ -2,6 +2,8 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/providers/user_data_provider.dart';
+import 'package:provider/provider.dart';
 import 'ButtonSwapExample.dart';
 import 'NavigationButton.dart';
 import 'Fill_infromation.dart';
@@ -14,10 +16,26 @@ class Pretest extends StatefulWidget {
 }
 
 class _PretestState extends State<Pretest> {
+  final heartRateController = TextEditingController();
+  final oxygenLevelController = TextEditingController();
+  final bloodPressureController = TextEditingController();
+
+  String currentTriedLevel =
+      'ไม่เหนื่อยเลย'; // เก็บค่าล่าสุดของ buttonInfo[0].text
+
   @override
   Widget build(BuildContext context) {
     // Get the height of the screen
     double screenHeight = (MediaQuery.of(context).size.height) - 50;
+    final userDataProvider = Provider.of<UserDataProvider>(context);
+
+    void dispose() {
+      // ล้าง memory ของ controller
+      heartRateController.dispose();
+      oxygenLevelController.dispose();
+      bloodPressureController.dispose();
+      super.dispose();
+    }
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -53,10 +71,10 @@ class _PretestState extends State<Pretest> {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(16),
-                        child: const Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
+                            const Expanded(
                               child: AutoSizeText(
                                 "อัตราการเต้นหัวใจ",
                                 style: TextStyle(
@@ -72,8 +90,9 @@ class _PretestState extends State<Pretest> {
                             SizedBox(
                               width: 170,
                               child: TextField(
+                                controller: heartRateController,
                                 keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   hintText: '',
                                 ),
                               ),
@@ -90,13 +109,27 @@ class _PretestState extends State<Pretest> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    inputbox("ปริมาณออกซิเจน"),
-                    inputbox("ความดันโลหิต")
+                    inputbox("ปริมาณออกซิเจน", oxygenLevelController),
+                    inputbox("ความดันโลหิต", bloodPressureController)
                   ],
                 ),
-                const ButtonSwapExample(),
+                ButtonSwapExample(
+                  onMainButtonChanged: (newText) {
+                    setState(() {
+                      currentTriedLevel = newText;
+                    });
+                  },
+                ),
+                // Text('ค่าความรู้สึกปัจจุบัน: $currentTriedLevel'),
                 Navigationbutton(
                   onForwardPressed: () {
+                    userDataProvider.updateHeartRate(
+                        int.tryParse(heartRateController.text) ?? 0);
+                    userDataProvider.updateOxygenLevel(
+                        double.tryParse(oxygenLevelController.text) ?? 0.0);
+                    userDataProvider
+                        .updateBloodPressure(bloodPressureController.text);
+                    userDataProvider.updateTriedLevel(currentTriedLevel);
                     Navigator.pushNamed(context, '/Fillinfrom');
                   },
                   onBackPressed: () {
@@ -110,7 +143,7 @@ class _PretestState extends State<Pretest> {
   }
 }
 
-Widget inputbox(String title) {
+Widget inputbox(String title, TextEditingController controller) {
   return Container(
     width: 150,
     height: 140,
@@ -135,11 +168,12 @@ Widget inputbox(String title) {
             textAlign: TextAlign.center, // Center-align text
           ),
         ),
-        const SizedBox(
+        SizedBox(
           width: 130,
           child: TextField(
+            controller: controller,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: '',
             ),
           ),

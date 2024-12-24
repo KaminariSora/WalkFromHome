@@ -1,5 +1,7 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/providers/user_data_provider.dart';
+import 'package:provider/provider.dart';
 import 'NavigationButton.dart';
 import 'CalibratePopup.dart';
 
@@ -19,8 +21,16 @@ class _fillinfromState extends State<fillinfrom> {
   bool isPressedButton1 = false;
   bool isPressedButton2 = false;
 
+  String currentGender = 'ไม่ระบุ';
+
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final weightController = TextEditingController();
+  final heightController = TextEditingController();
+
   void _onButton1Pressed() {
     setState(() {
+      currentGender = 'ชาย';
       isPressedButton1 = true;
       isPressedButton2 = false; // ปิดการเลือกปุ่มอื่น
     });
@@ -28,25 +38,37 @@ class _fillinfromState extends State<fillinfrom> {
 
   void _onButton2Pressed() {
     setState(() {
+      currentGender = 'หญิง';
       isPressedButton1 = false;
       isPressedButton2 = true; // ปิดการเลือกปุ่มอื่น
     });
   }
 
   void showCalibratePopup(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return const Dialog(
-        backgroundColor: Colors.transparent,
-        child: Calibratepopup(),
-      );
-    },
-  );
-}
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const Dialog(
+          backgroundColor: Colors.transparent,
+          child: Calibratepopup(),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final userDataProvider = Provider.of<UserDataProvider>(context);
+
+    void dispose() {
+      // ล้าง memory ของ controller
+      firstNameController.dispose();
+      lastNameController.dispose();
+      weightController.dispose();
+      heightController.dispose();
+      super.dispose();
+    }
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -74,6 +96,7 @@ class _fillinfromState extends State<fillinfrom> {
                   height: 80,
                   width: 331,
                   child: TextField(
+                    controller: firstNameController,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       labelText: 'ชื่อ : ',
@@ -105,6 +128,7 @@ class _fillinfromState extends State<fillinfrom> {
                   height: 80,
                   width: 331,
                   child: TextFormField(
+                    controller: lastNameController,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       labelText: 'นามสุกล : ',
@@ -148,17 +172,18 @@ class _fillinfromState extends State<fillinfrom> {
                                 color: Colors.black,
                                 width: 2.0,
                               )),
-                          child: const Column(
+                          child: Column(
                             children: [
-                              Text("น้ำหนัก",
+                              const Text("น้ำหนัก",
                                   style: TextStyle(
                                     fontSize: 22,
                                     fontFamily: 'prompt',
                                   )),
-                              SizedBox(height: 10.0),
+                              const SizedBox(height: 10.0),
                               TextField(
+                                controller: weightController,
                                 keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   hintText: '',
                                 ),
                               )
@@ -176,17 +201,18 @@ class _fillinfromState extends State<fillinfrom> {
                                 color: Colors.black,
                                 width: 2.0,
                               )),
-                          child: const Column(
+                          child: Column(
                             children: [
-                              Text("ส่วนสูง",
+                              const Text("ส่วนสูง",
                                   style: TextStyle(
                                     fontSize: 22,
                                     fontFamily: 'prompt',
                                   )),
-                              SizedBox(height: 10.0),
+                              const SizedBox(height: 10.0),
                               TextField(
+                                controller: heightController,
                                 keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   hintText: '',
                                 ),
                               )
@@ -291,13 +317,21 @@ class _fillinfromState extends State<fillinfrom> {
                     ),
                   ],
                 ),
+                // Text('เพศ: $currentGender'),
                 Navigationbutton(
                   onForwardPressed: () {
+                    userDataProvider.updateFirstName(firstNameController.text);
+                    userDataProvider.updateLastName(lastNameController.text);
+                    userDataProvider.updateWeight(
+                        double.tryParse(weightController.text) ?? 0.0);
+                    userDataProvider.updateHeight(
+                        double.tryParse(heightController.text) ?? 0.0);
+                    userDataProvider.updateGender(currentGender);
                     showCalibratePopup(context);
-                },
-                onBackPressed: () {
-                  Navigator.pop(context);
-                },
+                  },
+                  onBackPressed: () {
+                    Navigator.pop(context);
+                  },
                 )
               ],
             ),
