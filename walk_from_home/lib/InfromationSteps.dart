@@ -51,8 +51,8 @@ class _InfromationstepsState extends State<Infromationsteps> {
               fontFamily: 'prompt',
             ),
             textAlign: TextAlign.center,
-            maxLines: 1, 
-                    minFontSize: 12,
+            maxLines: 1,
+            minFontSize: 12,
           ),
           centerTitle: true,
           automaticallyImplyLeading: false),
@@ -332,10 +332,7 @@ class _InfromationstepsState extends State<Infromationsteps> {
             ),
             Navigationbutton(
               onForwardPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Testbeforestart()));
+                Navigator.pushNamed(context, '/Testbeforestart');
               },
               onBackPressed: () {
                 Navigator.pop(context);

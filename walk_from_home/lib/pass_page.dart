@@ -44,13 +44,13 @@ class PassPage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const TimeCounter()));
+                  Navigator.pushNamed(context, '/TimeCounter');
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.black,
                   backgroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                     side: const BorderSide(
@@ -73,7 +73,8 @@ class PassPage extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.black,
                   backgroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                     side: const BorderSide(

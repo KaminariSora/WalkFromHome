@@ -91,8 +91,7 @@ class DescriptionPassState extends State<DescriptionPass> {
           ),
           Navigationbutton(
             onForwardPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Pretest()));
+              Navigator.pushNamed(context, '/Pretest');
             },
             onBackPressed: () {
               SystemNavigator.pop();
