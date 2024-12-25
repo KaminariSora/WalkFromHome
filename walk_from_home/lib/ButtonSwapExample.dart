@@ -12,7 +12,9 @@ class ButtonInfo {
 }
 
 class ButtonSwapExample extends StatefulWidget {
-  const ButtonSwapExample({super.key});
+  final Function(String)? onMainButtonChanged; // Callback สำหรับส่งค่ากลับ
+
+  const ButtonSwapExample({super.key, this.onMainButtonChanged});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -44,6 +46,11 @@ class _ButtonSwapExampleState extends State<ButtonSwapExample> {
 
       // รวม buttonInfo[0] กับ sortedList ที่จัดเรียงแล้ว
       buttonInfo = [buttonInfo[0], ...sortedList];
+
+      // เรียก Callback เมื่อ main button เปลี่ยน
+      if (widget.onMainButtonChanged != null) {
+        widget.onMainButtonChanged!(buttonInfo[0].text);
+      }
     });
   }
 

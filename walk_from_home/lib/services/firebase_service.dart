@@ -4,7 +4,7 @@ import '../models/user_data.dart';
 class FirebaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> saveUserData(UserData userData) async {
+  Future<void> saveUserData(UserHealthData userData) async {
     await _firestore.collection('users').add(userData.toJson());
   }
 }

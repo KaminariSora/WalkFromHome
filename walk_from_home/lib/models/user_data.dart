@@ -1,24 +1,40 @@
-class UserData {
-  String name;
-  String email;
-  int age;
-  int weight;
-  int height;
+class UserHealthData {
+  String firstName;
+  String lastName;
+  String gender;
+  double weight;
+  double height;
+  int heartRate;
+  double oxygenLevel;
+  String bloodPressure;
+  String triedLevel;
+  double distance;
 
-  UserData(
-      {required this.name,
-      required this.email,
-      required this.age,
-      required this.weight,
-      required this.height});
+  UserHealthData({
+    required this.firstName,
+    required this.lastName,
+    required this.gender,
+    required this.weight,
+    required this.height,
+    required this.heartRate,
+    required this.oxygenLevel,
+    required this.bloodPressure,
+    required this.triedLevel,
+    required this.distance,
+  });
 
   Map<String, dynamic> toJson() {
     return {
-      'name': name,
-      'email': email,
-      'age': age,
+      'heartRate': heartRate,
+      'oxygenLevel': oxygenLevel,
+      'bloodPressure': bloodPressure,
+      'triedLevel': triedLevel,
+      'firstName': firstName,
+      'lastName': lastName,
       'weight': weight,
-      'height': height
+      'height': height,
+      'gender': gender,
+      'distance': distance,
     };
   }
 }
