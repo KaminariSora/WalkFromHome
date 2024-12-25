@@ -1,6 +1,5 @@
 // ignore_for_file: deprecated_member_use
 
-import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -19,10 +18,12 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
   double normData = 0.0;
   double walkingDistance = 0.0;
   String walkingInformation = 'Stop';
+  final double slowWalkThreshold = 3.7;
+  final double normalWalkThreshold = 6;
+  final double fastWalkThreshold = 7;
   int stepCount = 0;
   final double strideLength = 0.78;
 
-  Timer? _debounceTimer;
   @override
   void initState() {
     super.initState();
@@ -36,25 +37,17 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
         double norm = sqrt(x * x + y * y + z * z) * 5;
         normData = norm;
 
-        if (normData > 30) { // ไม่รู้ว่า norm ต้องเท่าไหร่
-          walkingInformation = 'Fast_walk';
-          if (_debounceTimer?.isActive ?? false) {
-            _debounceTimer?.cancel();
-          }
-          Timer(const Duration(milliseconds: 250), () {
-            distanceCalculate(walkingInformation);
-          });
-        } else if (normData > 10) { // ไม่รู้ว่า norm ต้องเท่าไหร่
+        if(norm > slowWalkThreshold && norm < normalWalkThreshold && norm < fastWalkThreshold) {
+          walkingInformation = 'Slow_walk';
+          print("Slow : ${norm.toStringAsFixed(2)}");
+        } else if(norm > slowWalkThreshold && norm > normalWalkThreshold && norm < fastWalkThreshold) {
           walkingInformation = 'Normal_walk';
-          if (_debounceTimer?.isActive ?? false) {
-            _debounceTimer?.cancel();
-          }
-          // 1 nanosecond = 0.001 microseconds
-          Timer(const Duration(milliseconds: 250), () {
-            distanceCalculate(walkingInformation);
-          });
+          print("Normal : ${norm.toStringAsFixed(2)}");
+        } else if(norm > slowWalkThreshold && norm > normalWalkThreshold && norm > fastWalkThreshold) {
+          walkingInformation = "Fast_walk";
+          print("Fast : ${norm.toStringAsFixed(2)}");
         } else {
-          walkingInformation = 'Stop';
+          walkingInformation = "Stop";
         }
       });
     });

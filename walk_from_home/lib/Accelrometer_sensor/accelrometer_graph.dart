@@ -19,7 +19,10 @@ class _AccelerometerGraphState extends State<AccelerometerGraph> {
   List<FlSpot> zData = [];
   List<FlSpot> normData = [];
   double time = 0;
-
+  double thresholdValue = 0; // Define your threshold value
+  // เดินช้าประมาณ 3.5 ~ 4
+  // เดินธรรมดา ประมาณ 6
+  // เดินเร็ว ประมาณ 7
   @override
   void initState() {
     super.initState();
@@ -40,13 +43,28 @@ class _AccelerometerGraphState extends State<AccelerometerGraph> {
         zData.add(FlSpot(time, event.z));
         normData.add(FlSpot(time, norm));
         time += 0.1; // Increment time for X-axis
+
+        thresholdValue = _calculateThreshold(normData);
       });
     });
   }
 
+  double _calculateThreshold(List<FlSpot> data) {
+    if (data.isEmpty) return 0;
+
+    // Extract only the Y values from the normData
+    List<double> normValues = data.map((spot) => spot.y).toList();
+
+    // Calculate the mean (you can replace this with median or percentile if needed)
+    double sum = normValues.reduce((a, b) => a + b);
+    return sum / normValues.length; // Mean of the norm values
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Scaffold(
+      appBar: AppBar(title: const Text('Accelerometer Graph')),
+      body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: LineChart(
           LineChartData(
@@ -93,8 +111,22 @@ class _AccelerometerGraphState extends State<AccelerometerGraph> {
                 barWidth: 2,
                 dotData: const FlDotData(show: false),
               ),
+              // Threshold line
+              LineChartBarData(
+                spots: List.generate(
+                  101,
+                  (index) => FlSpot(time - 10 + index * 0.1, thresholdValue),
+                ),
+                isCurved: false,
+                color: Colors.orange,
+                barWidth: 2,
+                dotData: const FlDotData(show: false),
+                dashArray: [5, 5], // Dotted line style
+              ),
             ],
-            )    ),
+          ),
+        ),
+      ),
     );
   }
 }
