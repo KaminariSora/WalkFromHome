@@ -28,6 +28,36 @@ class _TestbeforestartState extends State<Testbeforestart> {
 
   @override
   Widget build(BuildContext context) {
+    void showAlert(BuildContext context, String message) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("แจ้งเตือน"),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("ตกลง"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    void onNextButtonPressed() {
+      if (selectedSpeedButton == 0) {
+        showAlert(context, "กรุณาระบุการเดิน");
+      } else if (selectedStepButton == 0) {
+        showAlert(context, "กรุณาระบุระยะก้าว");
+      } else {
+        Navigator.pushNamed(context, '/TimeCounter');
+      }
+    }
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -291,9 +321,7 @@ class _TestbeforestartState extends State<Testbeforestart> {
             ],
           ),
           Navigationbutton(
-            onForwardPressed: () {
-              Navigator.pushNamed(context, '/Passpage');
-            },
+            onForwardPressed: onNextButtonPressed,
             onBackPressed: () {
               Navigator.pop(context);
             },

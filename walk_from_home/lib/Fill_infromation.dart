@@ -67,6 +67,51 @@ class _FillinFormState extends State<FillinForm> {
       super.dispose();
     }
 
+    void showAlert(BuildContext context, String message) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("แจ้งเตือน"),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("ตกลง"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    void onNextButtonPressed() {
+      String firstName = firstNameController.text.trim();
+      String lastName = lastNameController.text.trim();
+      String weight = weightController.text.trim();
+      String height = heightController.text.trim();
+
+      if (firstName.isEmpty ||
+          lastName.isEmpty ||
+          weight.isEmpty ||
+          height.isEmpty) {
+        showAlert(context, "กรุณากรอกข้อมูลให้ครบถ้วน");
+      } else if (currentGender == 'ไม่ระบุ') {
+        showAlert(context, "กรุณาระบุเพศ");
+      } else {
+        userDataProvider.updateFirstName(firstNameController.text);
+        userDataProvider.updateLastName(lastNameController.text);
+        userDataProvider
+            .updateWeight(double.tryParse(weightController.text) ?? 0.0);
+        userDataProvider
+            .updateHeight(double.tryParse(heightController.text) ?? 0.0);
+        userDataProvider.updateGender(currentGender);
+        showCalibratePopup(context);
+      }
+    }
+
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       builder: (context, child) {
@@ -90,25 +135,15 @@ class _FillinFormState extends State<FillinForm> {
                     ),
                   ),
                   // SizedBox(height: 50.h),
-                  buildTextField('ชื่อ : '),
+                  buildTextField('ชื่อ : ', firstNameController),
                   // SizedBox(height: 25.h),
-                  buildTextField('นามสุกล : '),
+                  buildTextField('นามสุกล : ', lastNameController),
                   // SizedBox(height: 44.h),
                   buildWeightHeightFields(),
                   // SizedBox(height: 44.h),
                   buildGenderSelection(),
                   Navigationbutton(
-                    onForwardPressed: () {
-                      userDataProvider
-                          .updateFirstName(firstNameController.text);
-                      userDataProvider.updateLastName(lastNameController.text);
-                      userDataProvider.updateWeight(
-                          double.tryParse(weightController.text) ?? 0.0);
-                      userDataProvider.updateHeight(
-                          double.tryParse(heightController.text) ?? 0.0);
-                      userDataProvider.updateGender(currentGender);
-                      showCalibratePopup(context);
-                    },
+                    onForwardPressed: onNextButtonPressed,
                     onBackPressed: () {
                       Navigator.pop(context);
                     },
@@ -122,11 +157,12 @@ class _FillinFormState extends State<FillinForm> {
     );
   }
 
-  Widget buildTextField(String label) {
+  Widget buildTextField(String label, TextEditingController controller) {
     return SizedBox(
       // height: 80.h,
       width: 331.w,
       child: TextField(
+        controller: controller,
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
           labelText: label,
@@ -158,14 +194,14 @@ class _FillinFormState extends State<FillinForm> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        buildMeasurementField("น้ำหนัก"),
+        buildMeasurementField("น้ำหนัก", weightController),
         SizedBox(width: 25.w),
-        buildMeasurementField("ส่วนสูง"),
+        buildMeasurementField("ส่วนสูง", heightController),
       ],
     );
   }
 
-  Widget buildMeasurementField(String label) {
+  Widget buildMeasurementField(String label, TextEditingController controller) {
     return Container(
       width: 140.w,
       height: 140.h,
@@ -187,9 +223,10 @@ class _FillinFormState extends State<FillinForm> {
             ),
           ),
           SizedBox(height: 10.h),
-          const TextField(
+          TextField(
+            controller: controller,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: '',
             ),
           ),

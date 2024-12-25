@@ -44,7 +44,7 @@ class PassPage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/TimeCounter');
+                  Navigator.pushNamed(context, '/Fillinfrom');
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.black,

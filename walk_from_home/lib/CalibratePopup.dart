@@ -59,7 +59,7 @@ class _CalibratepopupState extends State<Calibratepopup> {
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  Navigator.pushNamed(context, '/infromatoinStep');
+                  Navigator.pushNamed(context, '/infromationStep');
                 },
                 child: const Text(
                   "ปรับเทียบ",

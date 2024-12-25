@@ -12,12 +12,18 @@ class Infromationsteps extends StatefulWidget {
 }
 
 class _InfromationstepsState extends State<Infromationsteps> {
+  final distanceController = TextEditingController();
+  final stepsCountController = TextEditingController();
+
+  String walkingStyle = '';
+
   bool isPressedButton1 = false;
   bool isPressedButton2 = false;
   bool isPressedButton3 = false;
 
   void _onButton1Pressed() {
     setState(() {
+      walkingStyle = 'ช้า';
       isPressedButton1 = true;
       isPressedButton2 = false;
       isPressedButton3 = false;
@@ -26,6 +32,7 @@ class _InfromationstepsState extends State<Infromationsteps> {
 
   void _onButton2Pressed() {
     setState(() {
+      walkingStyle = 'ปกติ';
       isPressedButton1 = false;
       isPressedButton2 = true;
       isPressedButton3 = false;
@@ -34,6 +41,7 @@ class _InfromationstepsState extends State<Infromationsteps> {
 
   void _onButton3Pressed() {
     setState(() {
+      walkingStyle = 'เร็ว';
       isPressedButton1 = false;
       isPressedButton2 = false;
       isPressedButton3 = true;
@@ -42,6 +50,39 @@ class _InfromationstepsState extends State<Infromationsteps> {
 
   @override
   Widget build(BuildContext context) {
+    void showAlert(BuildContext context, String message) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("แจ้งเตือน"),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("ตกลง"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    void onNextButtonPressed() {
+      String distance = distanceController.text.trim();
+      String steps = stepsCountController.text.trim();
+
+      if (distance.isEmpty || steps.isEmpty) {
+        showAlert(context, "กรุณากรอกข้อมูลให้ครบถ้วน");
+      } else if (walkingStyle.trim().isEmpty) {
+        showAlert(context, "กรุณาระบุการเดิน");
+      } else {
+        Navigator.pushNamed(context, '/Testbeforestart');
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
           title: const AutoSizeText(
@@ -80,11 +121,11 @@ class _InfromationstepsState extends State<Infromationsteps> {
                       width: 2.0,
                     ),
                   ),
-                  child: const Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "ระยะทางที่ได้",
                         style: TextStyle(
                           fontSize: 22,
@@ -93,7 +134,7 @@ class _InfromationstepsState extends State<Infromationsteps> {
                       ),
                       Row(
                         children: [
-                          Expanded(
+                          const Expanded(
                             child: AutoSizeText(
                               "ในการตั้งค่าระยะก้าว",
                               style: TextStyle(
@@ -109,13 +150,14 @@ class _InfromationstepsState extends State<Infromationsteps> {
                           SizedBox(
                             width: 85,
                             child: TextField(
+                              controller: distanceController,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: '',
                               ),
                             ),
                           ),
-                          AutoSizeText(
+                          const AutoSizeText(
                             "เมตร",
                             style: TextStyle(
                               fontSize: 20, // Maximum font size
@@ -149,11 +191,11 @@ class _InfromationstepsState extends State<Infromationsteps> {
                       width: 2.0,
                     ),
                   ),
-                  child: const Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "จำนวนก้าวที่นับได้",
                         style: TextStyle(
                           fontSize: 22,
@@ -162,11 +204,11 @@ class _InfromationstepsState extends State<Infromationsteps> {
                       ),
                       Row(
                         children: [
-                          Expanded(
+                          const Expanded(
                             child: AutoSizeText(
                               "ในการตั้งค่าระยะก้าว",
                               style: TextStyle(
-                                fontSize: 26, // Maximum font size
+                                fontSize: 22, // Maximum font size
                                 fontFamily: 'prompt',
                               ),
                               maxLines: 1, // Maximum number of lines
@@ -174,19 +216,20 @@ class _InfromationstepsState extends State<Infromationsteps> {
                               textAlign: TextAlign.center, // Center-align text
                             ),
                           ),
-                          SizedBox(width: 17),
+                          const SizedBox(width: 17),
                           SizedBox(
                             width: 85,
                             child: TextField(
+                              controller: stepsCountController,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: '',
                               ),
                             ),
                           ),
-                          SizedBox(width: 17),
-                          Text(
-                            "เมตร",
+                          const SizedBox(width: 17),
+                          const Text(
+                            "ก้าว",
                             style: TextStyle(
                               fontSize: 20,
                               fontFamily: 'prompt',
@@ -331,9 +374,7 @@ class _InfromationstepsState extends State<Infromationsteps> {
               ],
             ),
             Navigationbutton(
-              onForwardPressed: () {
-                Navigator.pushNamed(context, '/Testbeforestart');
-              },
+              onForwardPressed: onNextButtonPressed,
               onBackPressed: () {
                 Navigator.pop(context);
               },

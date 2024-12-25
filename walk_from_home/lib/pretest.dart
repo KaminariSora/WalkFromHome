@@ -6,7 +6,6 @@ import 'package:flutter_application_1/providers/user_data_provider.dart';
 import 'package:provider/provider.dart';
 import 'ButtonSwapExample.dart';
 import 'NavigationButton.dart';
-import 'Fill_infromation.dart';
 
 class Pretest extends StatefulWidget {
   const Pretest({super.key});
@@ -22,6 +21,7 @@ class _PretestState extends State<Pretest> {
 
   String currentTriedLevel =
       'ไม่เหนื่อยเลย'; // เก็บค่าล่าสุดของ buttonInfo[0].text
+  int currentTriedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +35,55 @@ class _PretestState extends State<Pretest> {
       oxygenLevelController.dispose();
       bloodPressureController.dispose();
       super.dispose();
+    }
+
+    void showAlert(BuildContext context, String message,
+        {TextStyle textStyle = const TextStyle()}) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("แจ้งเตือน"),
+            content: Text(
+              message,
+              style: textStyle, // ใช้ style ที่ได้รับเป็นพารามิเตอร์
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("ตกลง"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    void onNextButtonPressed() {
+      String heart = heartRateController.text.trim();
+      String oxegen = oxygenLevelController.text.trim();
+      String blood = bloodPressureController.text.trim();
+
+      if (heart.isEmpty || oxegen.isEmpty || blood.isEmpty) {
+        showAlert(context, "กรุณากรอกข้อมูลให้ครบถ้วน");
+      } else if (heart.isNotEmpty && oxegen.isNotEmpty || blood.isNotEmpty) {
+        int heartRate = int.parse(heartRateController.text);
+        double oxygenLevel = double.parse(heartRateController.text);
+
+        if ((heartRate >= 101) ||
+            (oxygenLevel <= 59) ||
+            (currentTriedIndex >= 2)) {
+          Navigator.pushNamed(context, '/NotPasspage');
+        } else {
+          userDataProvider.updateHeartRate(heartRate);
+          userDataProvider.updateOxygenLevel(oxygenLevel);
+          userDataProvider.updateBloodPressure(bloodPressureController.text);
+          userDataProvider.updateTriedLevel(currentTriedLevel);
+          Navigator.pushNamed(context, '/Passpage');
+        }
+      }
     }
 
     return Scaffold(
@@ -114,24 +163,16 @@ class _PretestState extends State<Pretest> {
                   ],
                 ),
                 ButtonSwapExample(
-                  onMainButtonChanged: (newText) {
+                  onMainButtonChanged: (Map<String, dynamic> value) {
                     setState(() {
-                      currentTriedLevel = newText;
+                      currentTriedLevel = value['text'];
+                      currentTriedIndex = value['index'];
                     });
                   },
                 ),
                 // Text('ค่าความรู้สึกปัจจุบัน: $currentTriedLevel'),
                 Navigationbutton(
-                  onForwardPressed: () {
-                    userDataProvider.updateHeartRate(
-                        int.tryParse(heartRateController.text) ?? 0);
-                    userDataProvider.updateOxygenLevel(
-                        double.tryParse(oxygenLevelController.text) ?? 0.0);
-                    userDataProvider
-                        .updateBloodPressure(bloodPressureController.text);
-                    userDataProvider.updateTriedLevel(currentTriedLevel);
-                    Navigator.pushNamed(context, '/Fillinfrom');
-                  },
+                  onForwardPressed: onNextButtonPressed,
                   onBackPressed: () {
                     Navigator.pop(context);
                   },

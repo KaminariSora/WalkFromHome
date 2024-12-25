@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Description_Pass.dart';
 import 'package:flutter_application_1/Evaluation.dart';
 import 'package:flutter_application_1/Fill_infromation.dart';
+import 'package:flutter_application_1/Home.dart';
 import 'package:flutter_application_1/InfromationSteps.dart';
 import 'package:flutter_application_1/TestBeforeStart.dart';
+import 'package:flutter_application_1/notpass_page.dart';
 import 'package:flutter_application_1/pass_page.dart';
 import 'package:flutter_application_1/pretest.dart';
 import 'package:flutter_application_1/timeCounter.dart';
@@ -33,12 +35,14 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       initialRoute: '/',
       routes: {
-        '/': (context) => const DescriptionPass(),
+        '/': (context) => const Home(),
+        '/Description': (context) => const DescriptionPass(),
         '/Pretest': (context) => const Pretest(),
         '/Fillinfrom': (context) => const FillinForm(),
-        '/infromatoinStep': (context) => const Infromationsteps(),
+        '/infromationStep': (context) => const Infromationsteps(),
         '/Testbeforestart': (context) => const Testbeforestart(),
         '/Passpage': (context) => const PassPage(),
+        '/NotPasspage': (context) => const notPassPage(),
         '/TimeCounter': (context) => const TimeCounter(),
         '/EvaluationPage': (context) => const EvaluationPage(),
       },

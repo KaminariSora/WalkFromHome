@@ -13,6 +13,37 @@ class DescriptionPass extends StatefulWidget {
 
 class DescriptionPassState extends State<DescriptionPass> {
   bool isChecked = false; // ตัวแปรเก็บสถานะของ Checkbox
+
+  void showAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("แจ้งเตือน"),
+          content: Text("กรุณาอ่านคำอธิบายทั้งหมด"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("ตกลง"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void onNextButtonPressed() {
+    if (!isChecked) {
+      // ถ้า Checkbox ไม่ถูกเลือก ให้แสดง Popup
+      showAlert(context);
+    } else {
+      // ถ้า Checkbox ถูกเลือก ให้ไปหน้าถัดไป
+      Navigator.pushNamed(context, '/Pretest');
+    }
+  }
+
   String description = '''ขั้นตอนการใช้งานแอปพลิเคชัน
   1.  กรอกข้อมูลก่อนการทดสอบ
   1.1. อัตราการเต้นของหัวใจและปริมาณออกซิเจนในเลือด วัดโดยใช้ Oximeter
@@ -90,9 +121,7 @@ class DescriptionPassState extends State<DescriptionPass> {
             ),
           ),
           Navigationbutton(
-            onForwardPressed: () {
-              Navigator.pushNamed(context, '/Pretest');
-            },
+            onForwardPressed: onNextButtonPressed,
             onBackPressed: () {
               SystemNavigator.pop();
             },

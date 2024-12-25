@@ -82,6 +82,7 @@ flutter:
     - assets/feeling/3.png
     - assets/feeling/4.png
     - assets/feeling/5.png
+    - assets/grandpa.glb
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

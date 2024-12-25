@@ -118,7 +118,7 @@ class _EvaluationPageState extends State<EvaluationPage> {
                                 content: Text('Failed to save data: $error')),
                           );
                         }
-                        Navigator.pushNamed(context, '/Testbeforestart');
+                        Navigator.pushNamed(context, '/');
                       },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(

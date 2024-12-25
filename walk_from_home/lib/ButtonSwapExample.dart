@@ -6,13 +6,14 @@ import 'package:flutter/material.dart';
 class ButtonInfo {
   final String text;
   final String path;
-  int index;
+  final int index;
 
   ButtonInfo({required this.text, required this.path, required this.index});
 }
 
 class ButtonSwapExample extends StatefulWidget {
-  final Function(String)? onMainButtonChanged; // Callback สำหรับส่งค่ากลับ
+  final Function(Map<String, dynamic>)?
+      onMainButtonChanged; // Callback สำหรับส่งค่ากลับ
 
   const ButtonSwapExample({super.key, this.onMainButtonChanged});
 
@@ -47,9 +48,10 @@ class _ButtonSwapExampleState extends State<ButtonSwapExample> {
       // รวม buttonInfo[0] กับ sortedList ที่จัดเรียงแล้ว
       buttonInfo = [buttonInfo[0], ...sortedList];
 
-      // เรียก Callback เมื่อ main button เปลี่ยน
+// เรียก Callback เมื่อ main button เปลี่ยน
       if (widget.onMainButtonChanged != null) {
-        widget.onMainButtonChanged!(buttonInfo[0].text);
+        widget.onMainButtonChanged!(
+            {'text': buttonInfo[0].text, 'index': buttonInfo[0].index});
       }
     });
   }
