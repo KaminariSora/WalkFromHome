@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -16,6 +17,7 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
   double y = 0.0;
   double z = 0.0;
   double normData = 0.0;
+  double prevNorm = 0.0;
   double walkingDistance = 0.0;
   String walkingInformation = 'Stop';
   final double slowWalkThreshold = 3.7;
@@ -23,6 +25,8 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
   final double fastWalkThreshold = 7;
   int stepCount = 0;
   final double strideLength = 0.78;
+
+  Timer? timer;
 
   @override
   void initState() {
@@ -36,21 +40,50 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
 
         double norm = sqrt(x * x + y * y + z * z) * 5;
         normData = norm;
-
-        if(norm > slowWalkThreshold && norm < normalWalkThreshold && norm < fastWalkThreshold) {
-          walkingInformation = 'Slow_walk';
-          print("Slow : ${norm.toStringAsFixed(2)}");
-        } else if(norm > slowWalkThreshold && norm > normalWalkThreshold && norm < fastWalkThreshold) {
-          walkingInformation = 'Normal_walk';
-          print("Normal : ${norm.toStringAsFixed(2)}");
-        } else if(norm > slowWalkThreshold && norm > normalWalkThreshold && norm > fastWalkThreshold) {
-          walkingInformation = "Fast_walk";
-          print("Fast : ${norm.toStringAsFixed(2)}");
-        } else {
-          walkingInformation = "Stop";
+//  ต้องอัพเดท norm ทุกๆ .25 วิให้ได้ ตอนนี้ norm ไท้อัพเดทเพราะติด timer == null
+        if (timer == null) {
+          print('start timer');
+          print(norm);
+          startPeriodicTimer(norm);
         }
       });
     });
+  }
+  void startPeriodicTimer(double norm) {
+    timer = Timer.periodic(const Duration(milliseconds: 250), (timer) {
+      _checkState(norm);
+    });
+  }
+
+  void _checkState(double norm) {
+    if (norm < slowWalkThreshold) {
+      walkingInformation = "Stop";
+      // print("Stop");
+    } else if (norm > slowWalkThreshold && norm < normalWalkThreshold && norm < fastWalkThreshold) {
+      walkingInformation = 'Slow_walk';
+      prevNorm = norm;
+      print("Slow : ${norm.toStringAsFixed(2)}");
+      if (norm == prevNorm) {
+        print("Reach second threshold for Slow walk at ${prevNorm.toStringAsFixed(2)}.");
+        prevNorm = 0;
+      }
+    } else if (norm > normalWalkThreshold && norm < fastWalkThreshold) {
+      walkingInformation = 'Normal_walk';
+      prevNorm = norm;
+      print("Normal : ${norm.toStringAsFixed(2)}");
+      if (norm == prevNorm) {
+        print("Reach second threshold for Normal walk at ${prevNorm.toStringAsFixed(2)}.");
+        prevNorm = 0;
+      }
+    } else if (norm > fastWalkThreshold) {
+      walkingInformation = "Fast_walk";
+      prevNorm = norm;
+      print("Fast : ${norm.toStringAsFixed(2)}");
+      if (norm == prevNorm) {
+        print("Reach second threshold for Fast walk at ${prevNorm.toStringAsFixed(2)}.");
+        prevNorm = 0;
+      }
+    }
   }
 
   void resetToDefault() {
