@@ -1,7 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Accelrometer_sensor/Distance.dart';
+import 'package:flutter_application_1/Accelrometer_sensor/accelrometer_graph.dart';
+import 'package:flutter_application_1/Accelrometer_sensor/test.dart';
 import 'package:o3d/o3d.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'Evaluation.dart';
+import 'Accelrometer_sensor/Accelorator.dart';
 
 class TimeCounter extends StatefulWidget {
   const TimeCounter({super.key});
@@ -92,24 +97,31 @@ class _TimeCounterState extends State<TimeCounter> {
                 width: 328,
                 height: 360,
                 color: const Color(0xFFD9D9D9),
-                child: Transform.translate(
-                  offset: const Offset(-40, -90),
-                  child: Transform.scale(
-                    scale: 1.5,
-                    child: O3D(
-                      src: 'assets/grandpa.glb',
-                      controller: o3dController,
-                      ar: false,
-                      autoPlay: true,
-                      autoRotate: false,
-                      cameraControls: false,
-                      cameraTarget: CameraTarget(-.25, 1.5, 1.5),
-                      cameraOrbit: CameraOrbit(0, 90, 1),
-                    ),
-                  ),
+                child: const Column(
+                  children: [
+                    AcceloratorFunction(),
+                    // Test() 
+                    // AccelerometerGraph(),
+                  ],
+                ),
+                // child: Transform.translate(
+                //   offset: const Offset(-40, -90),
+                  // child: Transform.scale(
+                  //   scale: 1.5,
+                  //   child: O3D(
+                  //     src: 'assets/grandpa.glb',
+                  //     controller: o3dController,
+                  //     ar: false,
+                  //     autoPlay: true,
+                  //     autoRotate: false,
+                  //     cameraControls: false,
+                  //     cameraTarget: CameraTarget(-.25, 1.5, 1.5),
+                  //     cameraOrbit: CameraOrbit(0, 90, 1),
+                  //   ),
+                  // ),
                 ),
               ),
-            ),
+            // ),
             Text(
               timeFormatted,
               style: const TextStyle(fontSize: 48),
