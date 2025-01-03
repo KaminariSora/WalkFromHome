@@ -1,82 +1,130 @@
-// ignore_for_file: await_only_futures, prefer_const_constructors
-
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:pedometer/pedometer.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'dart:async';
+import 'package:sensors_plus/sensors_plus.dart';
 
-class Test01 extends StatefulWidget {
-  const Test01({super.key});
+void main() => runApp(StepCounterApp());
 
+class StepCounterApp extends StatelessWidget {
   @override
-  State<Test01> createState() => _Test01State();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: StepCounterScreen(),
+    );
+  }
 }
 
-class _Test01State extends State<Test01> {
-  String _stepCountValue = 'Unknown';
-  late StreamSubscription<StepCount> _subscription;
+class StepCounterScreen extends StatefulWidget {
+  @override
+  _StepCounterScreenState createState() => _StepCounterScreenState();
+}
+
+class _StepCounterScreenState extends State<StepCounterScreen> {
+  double accelerationX = 0.0;
+  double accelerationY = 0.0;
+  double accelerationZ = 0.0;
+  double threshold = 1.5; // เกณฑ์สำหรับการตรวจจับก้าว
+  int stepCount = 0;
+  double previousMagnitude = 0.0;
+
+  // เก็บค่าเฉลี่ยในแต่ละแกน
+  List<double> recentX = [];
+  List<double> recentY = [];
+  List<double> recentZ = [];
+  int averageWindow = 20; // จำนวนข้อมูลสำหรับการคำนวณค่าเฉลี่ย
 
   @override
   void initState() {
     super.initState();
-    _requestPermission();  // Request permission on start
-  }
 
-  // Request activity recognition permission
-  Future<void> _requestPermission() async {
-    // Request the permission for step counting (only on Android)
-    var status = await Permission.activityRecognition.request();
-
-    if (status.isGranted) {
-      initPlatformState();  // Initialize the pedometer if permission is granted
-    } else {
+    // ฟังข้อมูลจาก accelerometer
+    accelerometerEvents.listen((AccelerometerEvent event) {
       setState(() {
-        _stepCountValue = 'Permission Denied';
+        // อัปเดตค่าการเร่งดิบ
+        accelerationX = event.x;
+        accelerationY = event.y;
+        accelerationZ = event.z;
+
+        // เก็บข้อมูลใน buffer
+        _addToBuffer(recentX, event.x);
+        _addToBuffer(recentY, event.y);
+        _addToBuffer(recentZ, event.z);
+
+        // คำนวณค่าเฉลี่ยในแต่ละแกน
+        double avgX = _calculateAverage(recentX);
+        double avgY = _calculateAverage(recentY);
+        double avgZ = _calculateAverage(recentZ);
+
+        // ลบค่าเฉลี่ยออกจากค่าการเร่งดิบ
+        double correctedX = accelerationX - avgX;
+        double correctedY = accelerationY - avgY;
+        double correctedZ = accelerationZ - avgZ;
+
+        // คำนวณค่าเวกเตอร์การเร่งรวมที่ลบแรงโน้มถ่วงแล้ว
+        double magnitude = sqrt(
+            correctedX * correctedX +
+            correctedY * correctedY +
+            correctedZ * correctedZ);
+
+        // ตรวจจับพีคและเปรียบเทียบกับเกณฑ์
+        if ((magnitude - previousMagnitude).abs() > threshold) {
+          stepCount++;
+        }
+
+        previousMagnitude = magnitude;
       });
-    }
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    // Initialize the pedometer plugin
-    _subscription = Pedometer.stepCountStream.listen(_onData,
-        onError: _onError, onDone: _onDone, cancelOnError: true);
-
-    if (!mounted) return;
-  }
-
-  void _onData(StepCount stepCountValue) {
-    print(stepCountValue.steps);
-
-    setState(() {
-      _stepCountValue = "${stepCountValue.steps}";
     });
   }
 
-  void _onDone() {
-    print('Stream has completed.');
+  // ฟังก์ชันเพิ่มค่าใหม่ใน buffer
+  void _addToBuffer(List<double> buffer, double value) {
+    buffer.add(value);
+    if (buffer.length > averageWindow) {
+      buffer.removeAt(0); // ลบค่าที่เก่าออก
+    }
   }
 
-  void _onError(error) {
-    print("Flutter Pedometer Error: $error");
+  // ฟังก์ชันคำนวณค่าเฉลี่ย
+  double _calculateAverage(List<double> buffer) {
+    if (buffer.isEmpty) return 0.0;
+    return buffer.reduce((a, b) => a + b) / buffer.length;
   }
 
-  @override
-  void dispose() {
-    // Dispose the subscription when the widget is disposed to prevent memory leaks
-    _subscription.cancel();
-    super.dispose();
+  void resetValue() {
+    stepCount = 0;
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Pedometer Example'),
-        ),
-        body: Center(
-          child: Text('Steps taken: $_stepCountValue\n'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Step Counter'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Step Count:',
+              style: TextStyle(fontSize: 24),
+            ),
+            Text(
+              '$stepCount',
+              style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Acceleration (X, Y, Z):',
+              style: TextStyle(fontSize: 18),
+            ),
+            Text(
+              'X: ${accelerationX.toStringAsFixed(2)}\n'
+              'Y: ${accelerationY.toStringAsFixed(2)}\n'
+              'Z: ${accelerationZ.toStringAsFixed(2)}',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16),
+            ),
+            ElevatedButton(onPressed: resetValue, child: Text('reset'))
+          ],
         ),
       ),
     );

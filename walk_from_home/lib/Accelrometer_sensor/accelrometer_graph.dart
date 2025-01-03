@@ -26,7 +26,7 @@ class _AccelerometerGraphState extends State<AccelerometerGraph> {
   @override
   void initState() {
     super.initState();
-    userAccelerometerEvents.listen((UserAccelerometerEvent event) {
+    accelerometerEvents.listen((AccelerometerEvent event) {
       setState(() {
         // Limit the number of data points to avoid performance issues
         if (xData.length > 100) {
@@ -35,8 +35,12 @@ class _AccelerometerGraphState extends State<AccelerometerGraph> {
           zData.removeAt(0);
           normData.removeAt(0);
         }
+        double x5 = event.x * 2.5;
+        double y5 = event.y * 2.5;
+        double z5 = event.z * 2.5;
 
-        double norm = sqrt(event.x * event.x + event.y * event.y + event.z * event.z) * 5;
+        // double norm = sqrt(event.x * event.x + event.y * event.y + event.z * event.z);
+        double norm = sqrt(x5 * x5 + y5 * y5 + z5 * z5);
 
         xData.add(FlSpot(time, event.x));
         yData.add(FlSpot(time, event.y));
@@ -60,6 +64,21 @@ class _AccelerometerGraphState extends State<AccelerometerGraph> {
     return sum / normValues.length; // Mean of the norm values
   }
 
+  double calculateThreshold(List<double> accelerations, double multiplier) {
+    if (accelerations.isEmpty) return 0.0;
+
+    // คำนวณค่าเฉลี่ย
+    double avg = accelerations.reduce((a, b) => a + b) / accelerations.length;
+
+    // คำนวณค่าเบี่ยงเบนมาตรฐาน
+    double stdDev = sqrt(
+        accelerations.map((a) => pow(a - avg, 2)).reduce((a, b) => a + b) /
+            accelerations.length);
+
+    // กำหนดค่า Threshold
+    return avg + (multiplier * stdDev);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,8 +99,8 @@ class _AccelerometerGraphState extends State<AccelerometerGraph> {
             borderData: FlBorderData(show: true),
             minX: time - 10, // Show the last 10 seconds of data
             maxX: time,
-            minY: -20,
-            maxY: 20,
+            minY: -70,
+            maxY: 70,
             lineBarsData: [
               LineChartBarData(
                 spots: xData,
