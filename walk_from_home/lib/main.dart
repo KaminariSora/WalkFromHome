@@ -4,6 +4,7 @@ import 'Accelrometer_sensor/Accelorator.dart';
 import 'Description_Pass.dart';
 import 'timeCounter.dart';
 import 'Accelrometer_sensor/accelrometer_graph.dart';
+import 'Accelrometer_sensor/Distance.dart';
 
 void main() {
   runApp(const MyApp()); // Ensure this wraps with MaterialApp in MyApp
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: TimeCounter(),
     );
   }
