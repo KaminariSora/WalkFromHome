@@ -25,6 +25,13 @@ class _TimeCounterState extends State<TimeCounter> {
   double _progress = 1.0;
   final FlutterTts _flutterTts = FlutterTts();
   bool _ttsTriggered = false;
+  bool isTimerRunning = false;
+
+  void handleTimerStatusChange(bool status) {
+    setState(() {
+      isTimerRunning = status;
+    });
+  }
 
   void toggleTimer() {
     if (_isRunning) {
@@ -40,6 +47,7 @@ class _TimeCounterState extends State<TimeCounter> {
           setState(() {
             _start--;
             progressCalculated();
+            AcceloratorFunction(isTimerRunning: isTimerRunning);
           });
         } else {
           _timer?.cancel();
@@ -78,6 +86,14 @@ class _TimeCounterState extends State<TimeCounter> {
     super.dispose();
   }
 
+  void resetTimer () {
+    setState(() {
+      _start = 360;
+      _isRunning = false;
+      _timer?.cancel();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,9 +113,9 @@ class _TimeCounterState extends State<TimeCounter> {
                 width: 328,
                 height: 360,
                 color: const Color(0xFFD9D9D9),
-                child: const Column(
+                child: Column(
                   children: [
-                    AcceloratorFunction(),
+                    AcceloratorFunction(isTimerRunning: isTimerRunning),
                     // Test() 
                     // AccelerometerGraph(),
                   ],
@@ -146,6 +162,7 @@ class _TimeCounterState extends State<TimeCounter> {
                   _progress = 1.0; // Reset progress
                   _timer?.cancel();
                   _isRunning = false;
+                  handleTimerStatusChange(true);
                 });
                 Navigator.pushNamed(context, '/EvaluationPage');
               },
@@ -163,6 +180,7 @@ class _TimeCounterState extends State<TimeCounter> {
                 style: TextStyle(fontSize: 24, color: Colors.black),
               ),
             ),
+            ElevatedButton(onPressed: resetTimer, child: Text('Reset'))
           ],
         ),
       ),
