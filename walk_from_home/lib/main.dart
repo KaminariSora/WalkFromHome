@@ -12,12 +12,10 @@ import 'package:flutter_application_1/timeCounter.dart';
 import 'package:provider/provider.dart';
 import 'providers/user_data_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_application_1/Accelrometer_sensor/Distance.dart';
 import 'Accelrometer_sensor/Accelorator.dart';
 import 'Description_Pass.dart';
 import 'timeCounter.dart';
 import 'Accelrometer_sensor/accelrometer_graph.dart';
-import 'Accelrometer_sensor/Distance.dart';
 
 void main() async {
   WidgetsFlutterBinding
