@@ -11,10 +11,12 @@ class EvaluationPage extends StatefulWidget {
 }
 
 class _EvaluationPageState extends State<EvaluationPage> {
+
   @override
   Widget build(BuildContext context) {
     final userDataProvider = Provider.of<UserDataProvider>(context);
-
+    double distance = userDataProvider.userData.distance;
+    
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -73,9 +75,9 @@ class _EvaluationPageState extends State<EvaluationPage> {
                               maxLines: 1,
                               minFontSize: 12,
                             ),
-                            const AutoSizeText(
-                              '0 m',
-                              style: TextStyle(
+                            AutoSizeText(
+                              distance.toStringAsFixed(2),
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontFamily: 'prompt',
                               ),
