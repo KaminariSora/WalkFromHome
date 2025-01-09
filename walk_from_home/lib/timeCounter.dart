@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Accelrometer_sensor/Distance.dart';
 import 'package:flutter_application_1/Accelrometer_sensor/accelrometer_graph.dart';
-import 'package:flutter_application_1/Accelrometer_sensor/test.dart';
 import 'package:o3d/o3d.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'Evaluation.dart';
@@ -29,30 +27,33 @@ class _TimeCounterState extends State<TimeCounter> {
 
   void handleTimerStatusChange(bool status) {
     setState(() {
-      isTimerRunning = status;
+      isTimerRunning = !isTimerRunning;
     });
   }
+  
 
   void toggleTimer() {
     if (_isRunning) {
       _timer?.cancel();
       setState(() {
         _isRunning = false;
+        isTimerRunning = true;
       });
     } else {
       _isRunning = true;
       _ttsTriggered = false;
+      isTimerRunning = false;
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
         if (_start > 0) {
           setState(() {
             _start--;
             progressCalculated();
-            AcceloratorFunction(isTimerRunning: isTimerRunning);
           });
         } else {
           _timer?.cancel();
           setState(() {
             _isRunning = false;
+            isTimerRunning = false;
           });
         }
         if (_start == 60) {
@@ -71,6 +72,7 @@ class _TimeCounterState extends State<TimeCounter> {
   void progressCalculated() {
     setState(() {
       _progress = _start / _initialCountdown;
+      print("Count down");
     });
   }
 
@@ -89,7 +91,9 @@ class _TimeCounterState extends State<TimeCounter> {
   void resetTimer () {
     setState(() {
       _start = 360;
+      _progress = 1.0;
       _isRunning = false;
+      isTimerRunning = false;
       _timer?.cancel();
     });
   }
@@ -143,7 +147,10 @@ class _TimeCounterState extends State<TimeCounter> {
               style: const TextStyle(fontSize: 48),
             ),
             ElevatedButton(
-              onPressed: toggleTimer,
+              onPressed: (){
+                toggleTimer();
+                handleTimerStatusChange(true);
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
                 elevation: 0,
@@ -162,6 +169,7 @@ class _TimeCounterState extends State<TimeCounter> {
                   _progress = 1.0; // Reset progress
                   _timer?.cancel();
                   _isRunning = false;
+                  isTimerRunning = false;
                   handleTimerStatusChange(true);
                 });
                 Navigator.pushNamed(context, '/EvaluationPage');
