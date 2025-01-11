@@ -8,7 +8,7 @@ class UserDataProvider extends ChangeNotifier {
   UserHealthData _userData = UserHealthData(
     firstName: '',
     lastName: '',
-    gender: '',
+    gender: 'female',
     heartRate: 0,
     oxygenLevel: 0.0,
     bloodPressure: '',
@@ -19,6 +19,8 @@ class UserDataProvider extends ChangeNotifier {
   );
 
   UserHealthData get userData => _userData;
+
+  get gender => null;
 
   // ฟังก์ชันสำหรับอัปเดตตัวแปรแต่ละตัว
   void updateFirstName(String firstName) {

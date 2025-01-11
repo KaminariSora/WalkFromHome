@@ -11,6 +11,7 @@ import 'package:flutter_application_1/pretest.dart';
 import 'package:flutter_application_1/timeCounter.dart';
 import 'package:provider/provider.dart';
 import 'providers/user_data_provider.dart';
+import 'providers/FAQBeforeTest_provider.dart'; // Import the FAQBeforeTestProvider
 import 'package:firebase_core/firebase_core.dart';
 import 'Accelrometer_sensor/Accelorator.dart';
 import 'Description_Pass.dart';
@@ -19,12 +20,14 @@ import 'Accelrometer_sensor/accelrometer_graph.dart';
 
 void main() async {
   WidgetsFlutterBinding
-      .ensureInitialized(); // ทำให้ Flutter เตรียมพร้อมสำหรับ async code
-  await Firebase
-      .initializeApp(); // เรียกใช้ Firebase.initializeApp() ก่อน runApp()
+      .ensureInitialized();
+  await Firebase.initializeApp();
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => UserDataProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserDataProvider()),
+        ChangeNotifierProvider(create: (_) => FAQBeforeTestProvider()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -39,7 +42,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       initialRoute: '/',
       routes: {
-        '/': (context) => const Home(),
+        '/': (context) => const Testbeforestart(),
         '/Description': (context) => const DescriptionPass(),
         '/Pretest': (context) => const Pretest(),
         '/Fillinfrom': (context) => const FillinForm(),
