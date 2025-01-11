@@ -2,6 +2,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/NavigationButton.dart';
+import 'package:flutter_application_1/providers/FAQBeforeTest_provider.dart';
+import 'package:provider/provider.dart';
+import 'models/FAQBeforeTest.dart';
 
 class Testbeforestart extends StatefulWidget {
   const Testbeforestart({super.key});
@@ -13,21 +16,39 @@ class Testbeforestart extends StatefulWidget {
 class _TestbeforestartState extends State<Testbeforestart> {
   int selectedSpeedButton = 0;
   int selectedStepButton = 0;
-
-  void _onButtonPressedSpeed(int buttonIndex) {
-    setState(() {
-      selectedSpeedButton = buttonIndex;
-    });
-  }
-
-  void _onButtonPressedStep(int Index) {
-    setState(() {
-      selectedStepButton = Index;
-    });
-  }
+  late FAQBeforeTest faq;
 
   @override
   Widget build(BuildContext context) {
+    final faqProvider = Provider.of<FAQBeforeTestProvider>(context);
+    final faq = faqProvider.faq;
+
+    void _onButtonPressedSpeed(int buttonIndex) {
+      setState(() {
+        selectedSpeedButton = buttonIndex;
+        if (buttonIndex == 1) {
+          faqProvider.updateWalkingType('slow_walk');
+        } else if (buttonIndex == 2) {
+          faqProvider.updateWalkingType('normal_walk');
+        } else if (buttonIndex == 3) {
+          faqProvider.updateWalkingType('fast_walk');
+        }
+      });
+    }
+
+    void _onButtonPressedStep(int buttonIndex) {
+      setState(() {
+        selectedStepButton = buttonIndex;
+        if (buttonIndex == 1) {
+          faqProvider.updateWalkingStride('short_stride');
+        } else if (buttonIndex == 2) {
+          faqProvider.updateWalkingStride('normal_stride');
+        } else if (buttonIndex == 3) {
+          faqProvider.updateWalkingStride('long_stride');
+        }
+      });
+    }
+
     void showAlert(BuildContext context, String message) {
       showDialog(
         context: context,

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'NavigationButton.dart';
 import 'CalibratePopup.dart';
+import 'models/Calibrate_data.dart';
 
 class FillinForm extends StatefulWidget {
   const FillinForm({super.key});
@@ -24,11 +25,18 @@ class _FillinFormState extends State<FillinForm> {
   final weightController = TextEditingController();
   final heightController = TextEditingController();
 
+  late CalibrateData calibrateData;
+
   void _onButton1Pressed() {
     setState(() {
       currentGender = 'ชาย';
       isPressedButton1 = true;
       isPressedButton2 = false;
+
+      calibrateData = CalibrateData(
+      calibrateCheck: true,
+      gender: currentGender,
+    );
     });
   }
 
