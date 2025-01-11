@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/providers/FAQBeforeTest_provider.dart';
 import 'package:flutter_application_1/providers/user_data_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -19,8 +20,6 @@ class AcceloratorFunction extends StatefulWidget {
 }
 
 class _AcceloratorFunctionState extends State<AcceloratorFunction> {
-  
-
   double x = 0.0;
   double y = 0.0;
   double z = 0.0;
@@ -29,13 +28,12 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
   double walkingDistance = 0.0;
   int stepCount = 0;
   String walkingInformation = 'Stop';
-  String walkingStride = 'normal_stride';
   final double slowWalkThreshold = 26;
   final double normalWalkThreshold = 30;
   final double fastWalkThreshold = 36;
   bool calibrateCheck = false;
-  String gender = '';
-  double height = 0;
+  String gender = 'male';
+  double height = 180;
   double stepDistanceMale = 0.40541373;
   double stepDistanceFemale = 0.39418646;
 
@@ -61,10 +59,8 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
 
         double norm = sqrt(x5 * x5 + y5 * y5 + z5 * z5);
         normData = norm;
-        // print(widget.isTimerRunning);
 
         if (widget.isTimerRunning && timer == null) {
-          // _flutterTts.speak('การทดสอบจะเริ่มในอีก 5 วินาที');
           startPeriodicTimer();
         }
 
@@ -76,17 +72,16 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
   }
 
   void startPeriodicTimer() {
-  if (timer == null || !timer!.isActive) {
-    Future.delayed(const Duration(seconds: 5), () {
-      if (timer == null || !timer!.isActive) {
-        timer = Timer.periodic(const Duration(milliseconds: 250), (timer) {
-          _checkState(normData);
-        });
-      }
-    });
+    if (timer == null || !timer!.isActive) {
+      Future.delayed(const Duration(seconds: 5), () {
+        if (timer == null || !timer!.isActive) {
+          timer = Timer.periodic(const Duration(milliseconds: 250), (timer) {
+            _checkState(normData);
+          });
+        }
+      });
+    }
   }
-}
-
 
   void stopPeriodicTimer() {
     if (timer != null) {
@@ -126,8 +121,15 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
   }
 
   void calibrateCheckFunction() {
+    final faqProvider = Provider.of<FAQBeforeTestProvider>(context, listen: false);
+    final faq = faqProvider.faq;
+    final userDataProvider = Provider.of<UserDataProvider>(context);
+    final userData = userDataProvider.userData;
+    gender = userData.gender;
+    height = userData.height;
+
     if (calibrateCheck == true && gender == "male") {
-      switch (walkingStride) {
+      switch (faq.walkingStride) {
         case "short_stride":
           stepDistanceMale = 0.3266194883;
           break;
@@ -138,11 +140,13 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
           stepDistanceMale = 0.438089;
           break;
         default:
+          print('default');
           stepDistanceMale = 0.40541373;
       }
-      walkingDistance = calculateCalibrateDistanceMale(stepDistanceMale, stepCount);
+      walkingDistance =
+          calculateCalibrateDistanceMale(stepDistanceMale, stepCount);
     } else if (calibrateCheck == true && gender == "female") {
-      switch (walkingStride) {
+      switch (faq.walkingStride) {
         case "short_stride":
           stepDistanceFemale = 0.3266194883;
           break;
@@ -155,7 +159,8 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
         default:
           stepDistanceFemale = 0.39418646;
       }
-      walkingDistance = calculateCalibrateDistanceFemale(stepDistanceFemale, stepCount);
+      walkingDistance =
+          calculateCalibrateDistanceFemale(stepDistanceFemale, stepCount);
     } else if (calibrateCheck == false && gender == 'male') {
       walkingDistance = calculateDistanceMale(stepDistanceMale, stepCount);
     } else if (calibrateCheck == false && gender == "female") {
@@ -171,13 +176,15 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
     return (height * stepDistanceFemale * stepCount) / 100;
   }
 
-  double calculateCalibrateDistanceMale(double stepDistanceMale, int stepCount) {
-    double distanceCalibrate = stepDistanceMale*stepCount;
+  double calculateCalibrateDistanceMale(
+      double stepDistanceMale, int stepCount) {
+    double distanceCalibrate = stepDistanceMale * stepCount;
     return distanceCalibrate;
   }
 
-  double calculateCalibrateDistanceFemale(double stepDistanceFemale, int stepCount) {
-    double distanceCalibrate = stepDistanceFemale*stepCount;
+  double calculateCalibrateDistanceFemale(
+      double stepDistanceFemale, int stepCount) {
+    double distanceCalibrate = stepDistanceFemale * stepCount;
     return distanceCalibrate;
   }
 
@@ -195,6 +202,8 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
 
   @override
   Widget build(BuildContext context) {
+    final faqProvider = Provider.of<FAQBeforeTestProvider>(context);
+    final faq = faqProvider.faq;
     final userDataProvider = Provider.of<UserDataProvider>(context);
     final userData = userDataProvider.userData;
     gender = userData.gender;
@@ -204,15 +213,15 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'Gender: ${userData.gender}',
+          'WalkingType: ${faq.walkingType}',
           style: const TextStyle(fontSize: 15),
         ),
         Text(
-          'height: ${userData.height}',
+          'WalkingStride: ${faq.walkingStride}',
           style: const TextStyle(fontSize: 15),
         ),
         Text(
-          'Current Z: ${z.toStringAsFixed(2)}',
+          'Gender: $gender',
           style: const TextStyle(fontSize: 15),
         ),
         Text(
