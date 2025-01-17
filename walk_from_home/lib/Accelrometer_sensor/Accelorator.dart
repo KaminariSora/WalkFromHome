@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/user_data.dart';
 import 'package:flutter_application_1/providers/FAQBeforeTest_provider.dart';
 import 'package:flutter_application_1/providers/user_data_provider.dart';
 import 'package:provider/provider.dart';
@@ -32,8 +33,9 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
   final double normalWalkThreshold = 30;
   final double fastWalkThreshold = 36;
   bool calibrateCheck = false;
-  String gender = 'male';
-  double height = 180;
+  String gender = '';
+  // String gender = UserHealthData(firstName: firstName, lastName: lastName, gender: gender, weight: weight, height: height, heartRate: heartRate, oxygenLevel: oxygenLevel, bloodPressure: bloodPressure, triedLevel: triedLevel, distance: distance)
+  double height = 0;
   double stepDistanceMale = 0.40541373;
   double stepDistanceFemale = 0.39418646;
 
@@ -99,7 +101,7 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
       if (norm == prevNorm) {
         prevNorm = 0;
         stepCount++;
-        calibrateCheckFunction();
+        calibrateCheckFunction(context);
       }
     } else if (norm > normalWalkThreshold && norm < fastWalkThreshold) {
       walkingInformation = 'Normal_walk';
@@ -107,7 +109,7 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
       if (norm == prevNorm) {
         prevNorm = 0;
         stepCount++;
-        calibrateCheckFunction();
+        calibrateCheckFunction(context);
       }
     } else if (norm > fastWalkThreshold) {
       walkingInformation = "Fast_walk";
@@ -115,15 +117,15 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
       if (norm == prevNorm) {
         prevNorm = 0;
         stepCount++;
-        calibrateCheckFunction();
+        calibrateCheckFunction(context);
       }
     }
   }
 
-  void calibrateCheckFunction() {
+  void calibrateCheckFunction(BuildContext context) {
     final faqProvider = Provider.of<FAQBeforeTestProvider>(context, listen: false);
     final faq = faqProvider.faq;
-    final userDataProvider = Provider.of<UserDataProvider>(context);
+    final userDataProvider = Provider.of<UserDataProvider>(context, listen: false);
     final userData = userDataProvider.userData;
     gender = userData.gender;
     height = userData.height;
@@ -169,22 +171,25 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
   }
 
   double calculateDistanceMale(double stepDistanceMale, int stepCount) {
+    print('calculated male');
+    print(stepDistanceMale);
     return (height * stepDistanceMale * stepCount) / 100;
   }
 
   double calculateDistanceFemale(double stepDistanceFemale, int stepCount) {
+    print('calculated female');
     return (height * stepDistanceFemale * stepCount) / 100;
   }
 
-  double calculateCalibrateDistanceMale(
-      double stepDistanceMale, int stepCount) {
+  double calculateCalibrateDistanceMale(double stepDistanceMale, int stepCount) {
     double distanceCalibrate = stepDistanceMale * stepCount;
+    print(' calibrate calculated male');
     return distanceCalibrate;
   }
 
-  double calculateCalibrateDistanceFemale(
-      double stepDistanceFemale, int stepCount) {
+  double calculateCalibrateDistanceFemale(double stepDistanceFemale, int stepCount) {
     double distanceCalibrate = stepDistanceFemale * stepCount;
+    print(' calibrate calculated female');
     return distanceCalibrate;
   }
 
@@ -204,7 +209,7 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
   Widget build(BuildContext context) {
     final faqProvider = Provider.of<FAQBeforeTestProvider>(context);
     final faq = faqProvider.faq;
-    final userDataProvider = Provider.of<UserDataProvider>(context);
+    final userDataProvider = Provider.of<UserDataProvider>(context, listen: false);
     final userData = userDataProvider.userData;
     gender = userData.gender;
     height = userData.height;
@@ -213,7 +218,7 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'WalkingType: ${faq.walkingType}',
+          'height: ${userData.height}',
           style: const TextStyle(fontSize: 15),
         ),
         Text(
