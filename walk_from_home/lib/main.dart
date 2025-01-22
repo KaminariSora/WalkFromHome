@@ -5,18 +5,18 @@ import 'package:flutter_application_1/Fill_infromation.dart';
 import 'package:flutter_application_1/Home.dart';
 import 'package:flutter_application_1/InfromationSteps.dart';
 import 'package:flutter_application_1/TestBeforeStart.dart';
+import 'package:flutter_application_1/models/Calibrate_data.dart';
 import 'package:flutter_application_1/notpass_page.dart';
 import 'package:flutter_application_1/pass_page.dart';
 import 'package:flutter_application_1/pretest.dart';
 import 'package:flutter_application_1/timeCounter.dart';
 import 'package:provider/provider.dart';
 import 'providers/user_data_provider.dart';
-import 'providers/FAQBeforeTest_provider.dart'; // Import the FAQBeforeTestProvider
+import 'providers/FAQBeforeTest_provider.dart';
+import 'providers/calibrate_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Accelrometer_sensor/Accelorator.dart';
 import 'Description_Pass.dart';
-import 'timeCounter.dart';
-import 'Accelrometer_sensor/accelrometer_graph.dart';
 
 void main() async {
   WidgetsFlutterBinding
@@ -27,6 +27,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => UserDataProvider()),
         ChangeNotifierProvider(create: (_) => FAQBeforeTestProvider()),
+        ChangeNotifierProvider(create: (_) => CalibrateProvider()),
       ],
       child: const MyApp(),
     ),
