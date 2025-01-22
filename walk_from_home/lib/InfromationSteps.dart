@@ -1,8 +1,13 @@
 // ignore: file_names
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/providers/calibrate_provider.dart';
+import 'package:provider/provider.dart';
 import 'NavigationButton.dart';
 import 'TestBeforeStart.dart';
+import './models/Calibrate_data.dart';
+import 'package:flutter_application_1/providers/FAQBeforeTest_provider.dart';
+import './models/FAQBeforeTest.dart';
 
 class Infromationsteps extends StatefulWidget {
   const Infromationsteps({super.key});
@@ -21,35 +26,43 @@ class _InfromationstepsState extends State<Infromationsteps> {
   bool isPressedButton2 = false;
   bool isPressedButton3 = false;
 
-  void _onButton1Pressed() {
-    setState(() {
-      walkingStyle = 'ช้า';
-      isPressedButton1 = true;
-      isPressedButton2 = false;
-      isPressedButton3 = false;
-    });
-  }
+  late FAQBeforeTest faq;
+  late CalibrateData calibrateData;
 
-  void _onButton2Pressed() {
-    setState(() {
-      walkingStyle = 'ปกติ';
-      isPressedButton1 = false;
-      isPressedButton2 = true;
-      isPressedButton3 = false;
-    });
-  }
-
-  void _onButton3Pressed() {
-    setState(() {
-      walkingStyle = 'เร็ว';
-      isPressedButton1 = false;
-      isPressedButton2 = false;
-      isPressedButton3 = true;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
+    final faqProvider = Provider.of<FAQBeforeTestProvider>(context);  
+    final calibrateProvider = Provider.of<CalibrateProvider>(context);
+    void _onButton1Pressed() {
+      setState(() {
+        walkingStyle = 'ช้า';
+        isPressedButton1 = true;
+        isPressedButton2 = false;
+        isPressedButton3 = false;
+        faqProvider.updateWalkingType('slow_walk');
+      });
+    }
+
+    void _onButton2Pressed() {
+      setState(() {
+        walkingStyle = 'ปกติ';
+        isPressedButton1 = false;
+        isPressedButton2 = true;
+        isPressedButton3 = false;
+        faqProvider.updateWalkingType('normal_walk');
+      });
+    }
+
+    void _onButton3Pressed() {
+      setState(() {
+        walkingStyle = 'เร็ว';
+        isPressedButton1 = false;
+        isPressedButton2 = false;
+        isPressedButton3 = true;
+        faqProvider.updateWalkingType('fast_walk');
+      });
+    }
     void showAlert(BuildContext context, String message) {
       showDialog(
         context: context,
@@ -79,6 +92,11 @@ class _InfromationstepsState extends State<Infromationsteps> {
       } else if (walkingStyle.trim().isEmpty) {
         showAlert(context, "กรุณาระบุการเดิน");
       } else {
+        double distance = double.parse(distanceController.text);
+        calibrateProvider.updateCalibrateDistance(distance);
+        int stepCount = int.parse(stepsCountController.text);
+        calibrateProvider.updateStepCount(stepCount);
+        calibrateProvider.updateCalibrateCheck(true);
         Navigator.pushNamed(context, '/Testbeforestart');
       }
     }

@@ -3,8 +3,10 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/Calibrate_data.dart';
 import 'package:flutter_application_1/models/user_data.dart';
 import 'package:flutter_application_1/providers/FAQBeforeTest_provider.dart';
+import 'package:flutter_application_1/providers/calibrate_provider.dart';
 import 'package:flutter_application_1/providers/user_data_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -127,10 +129,20 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
     final faq = faqProvider.faq;
     final userDataProvider = Provider.of<UserDataProvider>(context, listen: false);
     final userData = userDataProvider.userData;
+    final calibrateProvider = Provider.of<CalibrateProvider>(context, listen: false);
+    final CalibrateData = calibrateProvider.calibrate;
     gender = userData.gender;
     height = userData.height;
 
-    if (calibrateCheck == true && gender == "male") {
+    if (CalibrateData.calibrateCheck == true && gender == "male") {
+      double stepDistanceMale = CalibrateData.calibrateDistance;
+      walkingDistance = calculateCalibrateDistanceMale(stepDistanceMale, stepCount);
+      userData.distance = walkingDistance;
+    } else if (CalibrateData.calibrateCheck == true && gender == "female") {
+      double stepDistanceFemale = CalibrateData.calibrateDistance;
+      walkingDistance = calculateCalibrateDistanceFemale(stepDistanceFemale, stepCount);
+      userData.distance = walkingDistance;
+    } else if (CalibrateData.calibrateCheck == false && gender == 'male') {
       switch (faq.walkingStride) {
         case "short_stride":
           stepDistanceMale = 0.3266194883;
@@ -142,12 +154,11 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
           stepDistanceMale = 0.438089;
           break;
         default:
-          print('default');
           stepDistanceMale = 0.40541373;
       }
-      walkingDistance =
-          calculateCalibrateDistanceMale(stepDistanceMale, stepCount);
-    } else if (calibrateCheck == true && gender == "female") {
+      walkingDistance = calculateDistanceMale(stepDistanceMale, stepCount);
+      userData.distance = walkingDistance;
+    } else if (CalibrateData.calibrateCheck == false && gender == "female") {
       switch (faq.walkingStride) {
         case "short_stride":
           stepDistanceFemale = 0.3266194883;
@@ -161,12 +172,8 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
         default:
           stepDistanceFemale = 0.39418646;
       }
-      walkingDistance =
-          calculateCalibrateDistanceFemale(stepDistanceFemale, stepCount);
-    } else if (calibrateCheck == false && gender == 'male') {
-      walkingDistance = calculateDistanceMale(stepDistanceMale, stepCount);
-    } else if (calibrateCheck == false && gender == "female") {
       walkingDistance = calculateDistanceFemale(stepDistanceFemale, stepCount);
+      userData.distance = walkingDistance;
     }
   }
 
@@ -211,6 +218,8 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
     final faq = faqProvider.faq;
     final userDataProvider = Provider.of<UserDataProvider>(context, listen: false);
     final userData = userDataProvider.userData;
+    final calibrateProvider = Provider.of<CalibrateProvider>(context, listen: false);
+    final CalibrateData = calibrateProvider.calibrate;
     gender = userData.gender;
     height = userData.height;
 
@@ -218,7 +227,7 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'height: ${userData.height}',
+          'height: ${CalibrateData.calibrateCheck}',
           style: const TextStyle(fontSize: 15),
         ),
         Text(

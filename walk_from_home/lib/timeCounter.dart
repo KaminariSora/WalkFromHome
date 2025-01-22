@@ -1,10 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Accelrometer_sensor/accelrometer_graph.dart';
 import 'package:o3d/o3d.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'Evaluation.dart';
-import 'Accelrometer_sensor/Accelorator.dart';
 
 class TimeCounter extends StatefulWidget {
   const TimeCounter({super.key});
@@ -17,7 +14,7 @@ class _TimeCounterState extends State<TimeCounter> {
   O3DController o3dController = O3DController();
   int _start = 360;
   final int _initialCountdown =
-      360; // Store initial countdown for progress calculation
+      360;
   Timer? _timer;
   bool _isRunning = false;
   double _progress = 1.0;
@@ -30,7 +27,6 @@ class _TimeCounterState extends State<TimeCounter> {
       isTimerRunning = !isTimerRunning;
     });
   }
-  
 
   void toggleTimer() {
     if (_isRunning) {
@@ -72,7 +68,6 @@ class _TimeCounterState extends State<TimeCounter> {
   void progressCalculated() {
     setState(() {
       _progress = _start / _initialCountdown;
-      print("Count down");
     });
   }
 
@@ -88,7 +83,7 @@ class _TimeCounterState extends State<TimeCounter> {
     super.dispose();
   }
 
-  void resetTimer () {
+  void resetTimer() {
     setState(() {
       _start = 360;
       _progress = 1.0;
@@ -117,37 +112,37 @@ class _TimeCounterState extends State<TimeCounter> {
                 width: 328,
                 height: 360,
                 color: const Color(0xFFD9D9D9),
-                child: Column(
-                  children: [
-                    AcceloratorFunction(isTimerRunning: isTimerRunning),
-                    // Test() 
-                    // AccelerometerGraph(),
-                  ],
-                ),
-                // child: Transform.translate(
-                //   offset: const Offset(-40, -90),
-                  // child: Transform.scale(
-                  //   scale: 1.5,
-                  //   child: O3D(
-                  //     src: 'assets/grandpa.glb',
-                  //     controller: o3dController,
-                  //     ar: false,
-                  //     autoPlay: true,
-                  //     autoRotate: false,
-                  //     cameraControls: false,
-                  //     cameraTarget: CameraTarget(-.25, 1.5, 1.5),
-                  //     cameraOrbit: CameraOrbit(0, 90, 1),
-                  //   ),
-                  // ),
+                // child: Column(
+                //   children: [
+                //     // AcceloratorFunction(isTimerRunning: isTimerRunning),
+                //     // Test()
+                //     // AccelerometerGraph(),
+                //   ],
+                // ),
+                child: Transform.translate(
+                  offset: const Offset(-40, -90),
+                  child: Transform.scale(
+                    scale: 1.5,
+                    child: O3D(
+                      src: 'assets/grandpa.glb',
+                      controller: o3dController,
+                      ar: false,
+                      autoPlay: true,
+                      autoRotate: false,
+                      cameraControls: false,
+                      cameraTarget: CameraTarget(-.25, 1.5, 1.5),
+                      cameraOrbit: CameraOrbit(0, 90, 1),
+                    ),
+                  ),
                 ),
               ),
-            // ),
+            ),
             Text(
               timeFormatted,
               style: const TextStyle(fontSize: 48),
             ),
             ElevatedButton(
-              onPressed: (){
+              onPressed: () {
                 toggleTimer();
                 handleTimerStatusChange(true);
               },
@@ -188,7 +183,20 @@ class _TimeCounterState extends State<TimeCounter> {
                 style: TextStyle(fontSize: 24, color: Colors.black),
               ),
             ),
-            ElevatedButton(onPressed: resetTimer, child: Text('Reset'))
+            ElevatedButton(
+              onPressed: resetTimer,
+              style: ElevatedButton.styleFrom(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  side: const BorderSide(color: Colors.black, width: 2),
+                ),
+              ),
+              child: const Text('Reset',
+                  style: TextStyle(fontSize: 24, color: Colors.black)),
+            ),
           ],
         ),
       ),

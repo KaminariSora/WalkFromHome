@@ -8,13 +8,13 @@ class UserDataProvider extends ChangeNotifier {
   UserHealthData _userData = UserHealthData(
     firstName: '',
     lastName: '',
-    gender: 'male',
+    gender: '',
     heartRate: 0,
     oxygenLevel: 0.0,
     bloodPressure: '',
     triedLevel: '',
     weight: 0.0,
-    height: 180.0,
+    height: 0.0,
     distance: 0.0,
   );
 

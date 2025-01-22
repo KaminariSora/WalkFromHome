@@ -1,8 +1,10 @@
 class CalibrateData {
   bool calibrateCheck;
-  String gender;
+  double calibrateDistance;
+  int calibrateStepCount;
   CalibrateData({
     required this.calibrateCheck,
-    required this.gender
+    required this.calibrateDistance,
+    required this.calibrateStepCount
   });
 }

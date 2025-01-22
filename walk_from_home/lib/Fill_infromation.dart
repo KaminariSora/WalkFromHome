@@ -25,24 +25,19 @@ class _FillinFormState extends State<FillinForm> {
   final weightController = TextEditingController();
   final heightController = TextEditingController();
 
-  late CalibrateData calibrateData;
+  // late CalibrateData calibrateData;
 
   void _onButton1Pressed() {
     setState(() {
-      currentGender = 'ชาย';
+      currentGender = 'male';
       isPressedButton1 = true;
       isPressedButton2 = false;
-
-      calibrateData = CalibrateData(
-      calibrateCheck: true,
-      gender: currentGender,
-    );
     });
   }
 
   void _onButton2Pressed() {
     setState(() {
-      currentGender = 'หญิง';
+      currentGender = 'female';
       isPressedButton1 = false;
       isPressedButton2 = true;
     });
