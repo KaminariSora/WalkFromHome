@@ -85,6 +85,7 @@ flutter:
     - assets/icons/walknormal.png
     - assets/icons/walkfast.png
     - assets/icons/heart-pulse.png
+    - assets/icons/icon.png
     - assets/feeling/1.png
     - assets/feeling/2.png
     - assets/feeling/3.png
