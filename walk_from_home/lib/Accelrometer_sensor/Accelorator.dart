@@ -11,6 +11,7 @@ import 'package:flutter_application_1/providers/user_data_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:o3d/o3d.dart';
 
 class AcceloratorFunction extends StatefulWidget {
   final bool isTimerRunning; // Receive timer status
@@ -23,6 +24,7 @@ class AcceloratorFunction extends StatefulWidget {
 }
 
 class _AcceloratorFunctionState extends State<AcceloratorFunction> {
+  O3DController o3dController = O3DController();
   double x = 0.0;
   double y = 0.0;
   double z = 0.0;
@@ -131,16 +133,15 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
     final userData = userDataProvider.userData;
     final calibrateProvider = Provider.of<CalibrateProvider>(context, listen: false);
     final CalibrateData = calibrateProvider.calibrate;
+    final stepDistance = CalibrateData.calibrateDistance/CalibrateData.calibrateStepCount;
     gender = userData.gender;
     height = userData.height;
 
     if (CalibrateData.calibrateCheck == true && gender == "male") {
-      double stepDistanceMale = CalibrateData.calibrateDistance;
-      walkingDistance = calculateCalibrateDistanceMale(stepDistanceMale, stepCount);
+      walkingDistance = calculateCalibrateDistanceMale(stepDistance, stepCount);
       userData.distance = walkingDistance;
     } else if (CalibrateData.calibrateCheck == true && gender == "female") {
-      double stepDistanceFemale = CalibrateData.calibrateDistance;
-      walkingDistance = calculateCalibrateDistanceFemale(stepDistanceFemale, stepCount);
+      walkingDistance = calculateCalibrateDistanceFemale(stepDistance, stepCount);
       userData.distance = walkingDistance;
     } else if (CalibrateData.calibrateCheck == false && gender == 'male') {
       switch (faq.walkingStride) {
@@ -223,42 +224,21 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
     gender = userData.gender;
     height = userData.height;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'height: ${CalibrateData.calibrateCheck}',
-          style: const TextStyle(fontSize: 15),
-        ),
-        Text(
-          'WalkingStride: ${faq.walkingStride}',
-          style: const TextStyle(fontSize: 15),
-        ),
-        Text(
-          'Gender: $gender',
-          style: const TextStyle(fontSize: 15),
-        ),
-        Text(
-          'Current Norm: ${normData.toStringAsFixed(2)}',
-          style: const TextStyle(fontSize: 15),
-        ),
-        const SizedBox(height: 20),
-        Text(
-          'Status: $walkingInformation',
-          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 30),
-        Text(
-          'Walking Distance: ${walkingDistance.toStringAsFixed(2)} meters',
-          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          'Step Count: $stepCount',
-          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-        ),
-        ElevatedButton(onPressed: resetToDefault, child: const Text('Reset'))
-      ],
-    );
+    return Transform.translate(
+                  offset: const Offset(-40, -90),
+                  child: Transform.scale(
+                    scale: 1.5,
+                    child: O3D(
+                      src: 'assets/grandpa.glb',
+                      controller: o3dController,
+                      ar: false,
+                      autoPlay: true,
+                      autoRotate: false,
+                      cameraControls: false,
+                      cameraTarget: CameraTarget(-.25, 1.5, 1.5),
+                      cameraOrbit: CameraOrbit(0, 90, 1),
+                    ),
+                  ),
+                );
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Accelrometer_sensor/Accelorator.dart';
 import 'package:o3d/o3d.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -11,7 +12,6 @@ class TimeCounter extends StatefulWidget {
 }
 
 class _TimeCounterState extends State<TimeCounter> {
-  O3DController o3dController = O3DController();
   int _start = 360;
   final int _initialCountdown =
       360;
@@ -112,29 +112,7 @@ class _TimeCounterState extends State<TimeCounter> {
                 width: 328,
                 height: 360,
                 color: const Color(0xFFD9D9D9),
-                // child: Column(
-                //   children: [
-                //     // AcceloratorFunction(isTimerRunning: isTimerRunning),
-                //     // Test()
-                //     // AccelerometerGraph(),
-                //   ],
-                // ),
-                child: Transform.translate(
-                  offset: const Offset(-40, -90),
-                  child: Transform.scale(
-                    scale: 1.5,
-                    child: O3D(
-                      src: 'assets/grandpa.glb',
-                      controller: o3dController,
-                      ar: false,
-                      autoPlay: true,
-                      autoRotate: false,
-                      cameraControls: false,
-                      cameraTarget: CameraTarget(-.25, 1.5, 1.5),
-                      cameraOrbit: CameraOrbit(0, 90, 1),
-                    ),
-                  ),
-                ),
+                child: AcceloratorFunction(isTimerRunning: isTimerRunning), 
               ),
             ),
             Text(
