@@ -52,7 +52,15 @@ class _TimeCounterState extends State<TimeCounter> {
             isTimerRunning = false;
           });
         }
-        if (_start == 60) {
+        if (_start == 359) {
+          _ttsTriggered = true;
+          _flutterTts.speak("การทดสอบจะเริ่มในอีก 5 วินาที");
+          _ttsTriggered = false;
+        } else if(_start == 355) {
+          _ttsTriggered = true;
+          _flutterTts.speak("เริ่มการทดสอบได้");
+          _ttsTriggered = false;
+        } else if(_start == 60) {
           _ttsTriggered = true;
           _flutterTts.speak("เหลือเวลาอีก 1 นาที");
           _ttsTriggered = false;
