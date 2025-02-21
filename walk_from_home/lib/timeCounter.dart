@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Accelrometer_sensor/Accelorator.dart';
-import 'package:o3d/o3d.dart';
+import 'package:wakelock/wakelock.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class TimeCounter extends StatefulWidget {
@@ -56,7 +56,7 @@ class _TimeCounterState extends State<TimeCounter> {
           _ttsTriggered = true;
           _flutterTts.speak("การทดสอบจะเริ่มในอีก 5 วินาที");
           _ttsTriggered = false;
-        } else if(_start == 355) {
+        } else if(_start == 353) {
           _ttsTriggered = true;
           _flutterTts.speak("เริ่มการทดสอบได้");
           _ttsTriggered = false;
@@ -86,8 +86,15 @@ class _TimeCounterState extends State<TimeCounter> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    Wakelock.enable(); 
+  }
+
+  @override
   void dispose() {
     _timer?.cancel();
+    Wakelock.disable();
     super.dispose();
   }
 
