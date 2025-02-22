@@ -93,16 +93,6 @@ class _EvaluationPageState extends State<EvaluationPage> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.05,
                   ),
-                  const AutoSizeText(
-                    'ผลการทดสอบคุณอยู่ในเกณฑ์',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'prompt',
-                    ),
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    minFontSize: 12,
-                  ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.05,
                   ),
