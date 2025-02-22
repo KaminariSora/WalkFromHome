@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Accelrometer_sensor/Accelorator.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class TimeCounter extends StatefulWidget {
@@ -88,16 +88,16 @@ class _TimeCounterState extends State<TimeCounter> {
   @override
   void initState() {
     super.initState();
-    Wakelock.enable(); 
+    WakelockPlus.enable();
   }
 
   @override
   void dispose() {
     _timer?.cancel();
-    Wakelock.disable();
+    WakelockPlus.disable();
     super.dispose();
   }
-
+  
   void resetTimer() {
     setState(() {
       _start = 360;
