@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1043188897010",
-    "project_id": "walkfromhome-1a417",
-    "storage_bucket": "walkfromhome-1a417.firebasestorage.app"
+    "project_number": "90532871711",
+    "project_id": "walkfromhome-c1890",
+    "storage_bucket": "walkfromhome-c1890.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1043188897010:android:6eb0ca9ef56df7daeb2c6b",
+        "mobilesdk_app_id": "1:90532871711:android:09865f3570d65aed675f2a",
         "android_client_info": {
           "package_name": "com.example.walk_from_home"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBTfGarJGdfOK2Tg8gIztPdX4vc697T8uo"
+          "current_key": "AIzaSyAIb9vih7OzBtMJ6Xx87NI8I4yUyRQ3sjA"
         }
       ],
       "services": {
