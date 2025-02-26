@@ -1,7 +1,8 @@
+// ignore: file_names
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/providers/user_data_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:walk_from_home/providers/user_data_provider.dart';
 
 class EvaluationPage extends StatefulWidget {
   const EvaluationPage({super.key});

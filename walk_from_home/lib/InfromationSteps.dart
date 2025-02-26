@@ -1,12 +1,11 @@
 // ignore: file_names
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/providers/calibrate_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:walk_from_home/providers/FAQBeforeTest_provider.dart';
+import 'package:walk_from_home/providers/calibrate_provider.dart';
 import 'NavigationButton.dart';
-import 'TestBeforeStart.dart';
 import './models/Calibrate_data.dart';
-import 'package:flutter_application_1/providers/FAQBeforeTest_provider.dart';
 import './models/FAQBeforeTest.dart';
 
 class Infromationsteps extends StatefulWidget {

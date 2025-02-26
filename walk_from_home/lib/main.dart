@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Description_Pass.dart';
-import 'package:flutter_application_1/Evaluation.dart';
-import 'package:flutter_application_1/Fill_infromation.dart';
-import 'package:flutter_application_1/Home.dart';
-import 'package:flutter_application_1/InfromationSteps.dart';
-import 'package:flutter_application_1/TestBeforeStart.dart';
-import 'package:flutter_application_1/models/Calibrate_data.dart';
-import 'package:flutter_application_1/notpass_page.dart';
-import 'package:flutter_application_1/pass_page.dart';
-import 'package:flutter_application_1/pretest.dart';
-import 'package:flutter_application_1/timeCounter.dart';
 import 'package:provider/provider.dart';
+import 'package:walk_from_home/Evaluation.dart';
+import 'package:walk_from_home/Fill_infromation.dart';
+import 'package:walk_from_home/Home.dart';
+import 'package:walk_from_home/InfromationSteps.dart';
+import 'package:walk_from_home/TestBeforeStart.dart';
+import 'package:walk_from_home/notpass_page.dart';
+import 'package:walk_from_home/pass_page.dart';
+import 'package:walk_from_home/pretest.dart';
+import 'package:walk_from_home/timeCounter.dart';
 import 'providers/user_data_provider.dart';
 import 'providers/FAQBeforeTest_provider.dart';
 import 'providers/calibrate_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'Accelrometer_sensor/Accelorator.dart';
 import 'Description_Pass.dart';
 
 void main() async {

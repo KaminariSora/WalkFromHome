@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/timeCounter.dart';
-import 'timeCounter.dart';
 
 class Navigationbutton extends StatelessWidget {
   final VoidCallback? onBackPressed; // Action for the back button

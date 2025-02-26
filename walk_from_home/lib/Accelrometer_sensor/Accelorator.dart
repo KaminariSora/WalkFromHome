@@ -3,15 +3,19 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/Calibrate_data.dart';
-import 'package:flutter_application_1/models/user_data.dart';
-import 'package:flutter_application_1/providers/FAQBeforeTest_provider.dart';
-import 'package:flutter_application_1/providers/calibrate_provider.dart';
-import 'package:flutter_application_1/providers/user_data_provider.dart';
+import 'package:walk_from_home/CalibratePopup.dart';
+// import 'package:flutter_application_1/models/Calibrate_data.dart';
+// import 'package:flutter_application_1/models/user_data.dart';
+// import 'package:flutter_application_1/providers/FAQBeforeTest_provider.dart';
+// import 'package:flutter_application_1/providers/calibrate_provider.dart';
+// import 'package:flutter_application_1/providers/user_data_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:o3d/o3d.dart';
+import 'package:walk_from_home/providers/FAQBeforeTest_provider.dart';
+import 'package:walk_from_home/providers/calibrate_provider.dart';
+import 'package:walk_from_home/providers/user_data_provider.dart';
 
 class AcceloratorFunction extends StatefulWidget {
   final bool isTimerRunning; // Receive timer status

@@ -1,11 +1,10 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/providers/user_data_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:walk_from_home/providers/user_data_provider.dart';
 import 'NavigationButton.dart';
 import 'CalibratePopup.dart';
-import 'models/Calibrate_data.dart';
 
 class FillinForm extends StatefulWidget {
   const FillinForm({super.key});
@@ -61,6 +60,7 @@ class _FillinFormState extends State<FillinForm> {
     double screenHeight = (MediaQuery.of(context).size.height) - 50;
     final userDataProvider = Provider.of<UserDataProvider>(context);
 
+    // ignore: unused_element
     void dispose() {
       // ล้าง memory ของ controller
       firstNameController.dispose();
@@ -75,14 +75,14 @@ class _FillinFormState extends State<FillinForm> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("แจ้งเตือน"),
+            title: const Text("แจ้งเตือน"),
             content: Text(message),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text("ตกลง"),
+                child: const Text("ตกลง"),
               ),
             ],
           );
@@ -121,9 +121,9 @@ class _FillinFormState extends State<FillinForm> {
         return Scaffold(
           body: SingleChildScrollView(
             child: Container(
-              height: screenHeight, // Set the height to screen height
+              height: screenHeight,
               alignment: Alignment
-                  .topCenter, // กำหนดให้ element อยู่ตรงกลางด้านบนของ Container
+                  .topCenter,
               margin: const EdgeInsets.fromLTRB(20, 50, 20, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

@@ -7,9 +7,9 @@
 
     <application
         android:name="${applicationName}"
-        android:label="walk_from_home"
+        android:label="WalkFromHome"
         android:requestLegacyExternalStorage="true"
-        android:icon="@mipmap/walk_from_home_logo"
+        android:icon="@mipmap/walkfromhomelogo"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"

@@ -1,9 +1,9 @@
 // ignore: file_names
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/NavigationButton.dart';
-import 'package:flutter_application_1/providers/FAQBeforeTest_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:walk_from_home/NavigationButton.dart';
+import 'package:walk_from_home/providers/FAQBeforeTest_provider.dart';
 import 'models/FAQBeforeTest.dart';
 
 class Testbeforestart extends StatefulWidget {
@@ -21,9 +21,8 @@ class _TestbeforestartState extends State<Testbeforestart> {
   @override
   Widget build(BuildContext context) {
     final faqProvider = Provider.of<FAQBeforeTestProvider>(context);
-    final faq = faqProvider.faq;
 
-    void _onButtonPressedSpeed(int buttonIndex) {
+    void onButtonPressedSpeed(int buttonIndex) {
       setState(() {
         selectedSpeedButton = buttonIndex;
         if (buttonIndex == 1) {
@@ -36,7 +35,7 @@ class _TestbeforestartState extends State<Testbeforestart> {
       });
     }
 
-    void _onButtonPressedStep(int buttonIndex) {
+    void onButtonPressedStep(int buttonIndex) {
       setState(() {
         selectedStepButton = buttonIndex;
         if (buttonIndex == 1) {
@@ -54,14 +53,14 @@ class _TestbeforestartState extends State<Testbeforestart> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("แจ้งเตือน"),
+            title: const Text("แจ้งเตือน"),
             content: Text(message),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text("ตกลง"),
+                child: const Text("ตกลง"),
               ),
             ],
           );
@@ -120,11 +119,11 @@ class _TestbeforestartState extends State<Testbeforestart> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
+              SizedBox(
                 width: 104,
                 height: 150,
                 child: TextButton(
-                  onPressed: () => _onButtonPressedSpeed(1),
+                  onPressed: () => onButtonPressedSpeed(1),
                   style: TextButton.styleFrom(
                     backgroundColor:
                         selectedSpeedButton == 1 ? Colors.grey : Colors.white,
@@ -158,11 +157,11 @@ class _TestbeforestartState extends State<Testbeforestart> {
               ),
               const SizedBox(width: 17),
               //ปุ่มเดินปกติ
-              Container(
+              SizedBox(
                 width: 104,
                 height: 150,
                 child: TextButton(
-                  onPressed: () => _onButtonPressedSpeed(2),
+                  onPressed: () => onButtonPressedSpeed(2),
                   style: TextButton.styleFrom(
                     backgroundColor:
                         selectedSpeedButton == 2 ? Colors.grey : Colors.white,
@@ -196,11 +195,11 @@ class _TestbeforestartState extends State<Testbeforestart> {
               ),
               const SizedBox(width: 17),
               //ปุ่มเดินเร็ว
-              Container(
+              SizedBox(
                 width: 104,
                 height: 150,
                 child: TextButton(
-                  onPressed: () => _onButtonPressedSpeed(3),
+                  onPressed: () => onButtonPressedSpeed(3),
                   style: TextButton.styleFrom(
                     backgroundColor:
                         selectedSpeedButton == 3 ? Colors.grey : Colors.white,
@@ -236,7 +235,7 @@ class _TestbeforestartState extends State<Testbeforestart> {
           ),
           const SizedBox(height: 41),
           Container(
-            margin: EdgeInsets.only(left: 40),
+            margin: const EdgeInsets.only(left: 40),
             alignment: Alignment.centerLeft,
             child: const Text(
               "คุณเป็นคนเดินก้าวยาวหรือสั้น",
@@ -250,11 +249,11 @@ class _TestbeforestartState extends State<Testbeforestart> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
+              SizedBox(
                 width: 104,
                 height: 64,
                 child: TextButton(
-                  onPressed: () => _onButtonPressedStep(1),
+                  onPressed: () => onButtonPressedStep(1),
                   style: TextButton.styleFrom(
                     backgroundColor:
                         selectedStepButton == 1 ? Colors.grey : Colors.white,
@@ -279,12 +278,12 @@ class _TestbeforestartState extends State<Testbeforestart> {
                   ),
                 ),
               ),
-              SizedBox(width: 17),
-              Container(
+              const SizedBox(width: 17),
+              SizedBox(
                 width: 104,
                 height: 64,
                 child: TextButton(
-                  onPressed: () => _onButtonPressedStep(2),
+                  onPressed: () => onButtonPressedStep(2),
                   style: TextButton.styleFrom(
                     backgroundColor:
                         selectedStepButton == 2 ? Colors.grey : Colors.white,
@@ -309,12 +308,12 @@ class _TestbeforestartState extends State<Testbeforestart> {
                   ),
                 ),
               ),
-              SizedBox(width: 17),
-              Container(
+              const SizedBox(width: 17),
+              SizedBox(
                 width: 104,
                 height: 64,
                 child: TextButton(
-                  onPressed: () => _onButtonPressedStep(3),
+                  onPressed: () => onButtonPressedStep(3),
                   style: TextButton.styleFrom(
                     backgroundColor:
                         selectedStepButton == 3 ? Colors.grey : Colors.white,

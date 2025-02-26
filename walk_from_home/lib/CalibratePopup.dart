@@ -1,9 +1,5 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/TestBeforeStart.dart';
-import 'InfromationSteps.dart';
-import 'timeCounter.dart';
-import 'pass_page.dart';
-import 'notpass_page.dart';
 
 class Calibratepopup extends StatefulWidget {
   const Calibratepopup({super.key});

@@ -2,8 +2,8 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/providers/user_data_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:walk_from_home/providers/user_data_provider.dart';
 import 'ButtonSwapExample.dart';
 import 'NavigationButton.dart';
 
@@ -43,7 +43,7 @@ class _PretestState extends State<Pretest> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("แจ้งเตือน"),
+            title: const Text("แจ้งเตือน"),
             content: Text(
               message,
               style: textStyle, // ใช้ style ที่ได้รับเป็นพารามิเตอร์
@@ -53,7 +53,7 @@ class _PretestState extends State<Pretest> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text("ตกลง"),
+                child: const Text("ตกลง"),
               ),
             ],
           );
