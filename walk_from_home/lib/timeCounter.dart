@@ -41,16 +41,6 @@ class _TimeCounterState extends State<TimeCounter> {
     await _flutterTts.setSpeechRate(0.5);
     await _flutterTts.setVolume(1.0);
     await _flutterTts.setPitch(1.0);
-
-    _flutterTts.setCompletionHandler(() {
-      print("TTS Completed");
-    });
-
-    _flutterTts.setErrorHandler((msg) {
-      print("TTS Error: $msg");
-    });
-
-    print("TTS Setup Complete");
   }
 
   void handleTimerStatusChange(bool status) {
