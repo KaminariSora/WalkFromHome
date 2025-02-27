@@ -77,7 +77,7 @@ class _EvaluationPageState extends State<EvaluationPage> {
                               minFontSize: 12,
                             ),
                             AutoSizeText(
-                              distance.toStringAsFixed(2),
+                              '${distance.toStringAsFixed(2)} เมตร',
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontFamily: 'prompt',
