@@ -13,14 +13,45 @@ class TimeCounter extends StatefulWidget {
 
 class _TimeCounterState extends State<TimeCounter> {
   int _start = 360;
-  final int _initialCountdown =
-      360;
+  final int _initialCountdown = 360;
   Timer? _timer;
   bool _isRunning = false;
   double _progress = 1.0;
   final FlutterTts _flutterTts = FlutterTts();
   bool _ttsTriggered = false;
   bool isTimerRunning = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WakelockPlus.enable();
+    setupTTS();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    WakelockPlus.disable();
+    super.dispose();
+  }
+
+  Future<void> setupTTS() async {
+    await _flutterTts.setEngine("com.google.android.tts");
+    await _flutterTts.setLanguage("th-TH");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.setVolume(1.0);
+    await _flutterTts.setPitch(1.0);
+
+    _flutterTts.setCompletionHandler(() {
+      print("TTS Completed");
+    });
+
+    _flutterTts.setErrorHandler((msg) {
+      print("TTS Error: $msg");
+    });
+
+    print("TTS Setup Complete");
+  }
 
   void handleTimerStatusChange(bool status) {
     setState(() {
@@ -39,37 +70,43 @@ class _TimeCounterState extends State<TimeCounter> {
       _isRunning = true;
       _ttsTriggered = false;
       isTimerRunning = false;
-      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        if (_start > 0) {
-          setState(() {
-            _start--;
-            progressCalculated();
-          });
-        } else {
-          _timer?.cancel();
-          setState(() {
-            _isRunning = false;
-            isTimerRunning = false;
-          });
-        }
-        if (_start == 359) {
-          _ttsTriggered = true;
-          _flutterTts.speak("การทดสอบจะเริ่มในอีก 5 วินาที");
-          _ttsTriggered = false;
-        } else if(_start == 353) {
-          _ttsTriggered = true;
-          _flutterTts.speak("เริ่มการทดสอบได้");
-          _ttsTriggered = false;
-        } else if(_start == 60) {
-          _ttsTriggered = true;
-          _flutterTts.speak("เหลือเวลาอีก 1 นาที");
-          _ttsTriggered = false;
-        } else if (_start == 0) {
-          _ttsTriggered = true;
-          _flutterTts.speak("ยินดีด้วย คุณเดินครบเวลาที่กำหนดแล้ว");
-          _ttsTriggered = false;
-        }
+      _flutterTts.speak("การทดสอบจะเริ่มในอีก 5 วินาที");
+      Future.delayed(const Duration(seconds: 5), () {
+        _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+          if (_start > 0) {
+            setState(() {
+              _start--;
+              progressCalculated();
+            });
+          } else {
+            _timer?.cancel();
+            setState(() {
+              _isRunning = false;
+              isTimerRunning = false;
+            });
+            Navigator.pushNamed(context, '/EvaluationPage');
+          }
+          checkTTSAnnouncements();
+        });
       });
+    }
+  }
+
+  Future<void> checkTTSAnnouncements() async {
+    if (_start == 359) {
+      await _flutterTts.speak("เริ่มการทดสอบได้");
+    } else if (_start == 300) {
+      await _flutterTts.speak("เหลือเวลาอีก 5 นาที");
+    } else if (_start == 240) {
+      await _flutterTts.speak("เหลือเวลาอีก 4 นาที");
+    } else if (_start == 180) {
+      await _flutterTts.speak("เหลือเวลาอีก 3 นาที");
+    } else if (_start == 120) {
+      await _flutterTts.speak("เหลือเวลาอีก 2 นาที");
+    } else if (_start == 60) {
+      await _flutterTts.speak("เหลือเวลาอีก 1 นาที");
+    } else if (_start == 1) {
+      await _flutterTts.speak("ยินดีด้วย คุณเดินครบเวลาที่กำหนดแล้ว");
     }
   }
 
@@ -85,19 +122,6 @@ class _TimeCounterState extends State<TimeCounter> {
     return '$minutes:$seconds';
   }
 
-  @override
-  void initState() {
-    super.initState();
-    WakelockPlus.enable();
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    WakelockPlus.disable();
-    super.dispose();
-  }
-  
   void resetTimer() {
     setState(() {
       _start = 360;
@@ -127,7 +151,7 @@ class _TimeCounterState extends State<TimeCounter> {
                 width: 328,
                 height: 360,
                 color: const Color(0xFFD9D9D9),
-                child: AcceloratorFunction(isTimerRunning: isTimerRunning), 
+                child: AcceloratorFunction(isTimerRunning: isTimerRunning),
               ),
             ),
             Text(
@@ -175,6 +199,9 @@ class _TimeCounterState extends State<TimeCounter> {
                 'สิ้นสุดการทดสอบ',
                 style: TextStyle(fontSize: 24, color: Colors.black),
               ),
+            ),
+            const SizedBox(
+              height: 20,
             ),
             ElevatedButton(
               onPressed: resetTimer,
