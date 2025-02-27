@@ -49,37 +49,58 @@ class _TimeCounterState extends State<TimeCounter> {
     });
   }
 
-  void toggleTimer() {
+  Completer<void>? _delayCompleter;
+
+  void toggleTimer() async {
     if (_isRunning) {
       _timer?.cancel();
+      _timer = null;
+      _delayCompleter?.complete(); // ยกเลิกการหน่วงเวลา (ถ้ามี)
+      _delayCompleter = null; // รีเซ็ตเพื่อให้ใช้งานใหม่ได้
       setState(() {
         _isRunning = false;
-        isTimerRunning = true;
+        isTimerRunning = false;
       });
-    } else {
-      _isRunning = true;
-      _ttsTriggered = false;
-      isTimerRunning = false;
-      _flutterTts.speak("การทดสอบจะเริ่มในอีก 5 วินาที");
-      Future.delayed(const Duration(seconds: 5), () {
-        _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-          if (_start > 0) {
-            setState(() {
-              _start--;
-              progressCalculated();
-            });
-          } else {
-            _timer?.cancel();
-            setState(() {
-              _isRunning = false;
-              isTimerRunning = false;
-            });
-            Navigator.pushNamed(context, '/EvaluationPage');
-          }
-          checkTTSAnnouncements();
-        });
-      });
+      return;
     }
+
+    _flutterTts.speak("การทดสอบจะเริ่มในอีก 5 วินาที");
+    _isRunning = true;
+    isTimerRunning = false;
+    _ttsTriggered = false;
+
+    _delayCompleter = Completer<void>(); // สร้าง Completer ใหม่ทุกครั้ง
+    await Future.any([
+      Future.delayed(const Duration(seconds: 5)), // หน่วงเวลา 5 วินาที
+      _delayCompleter!.future, // สามารถถูกยกเลิกได้
+    ]);
+
+    if (!_isRunning) return; // ตรวจสอบอีกครั้งว่าผู้ใช้ได้หยุดไปก่อนหรือไม่
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!_isRunning) {
+        _timer?.cancel();
+        _timer = null;
+        return;
+      }
+
+      if (_start > 0) {
+        setState(() {
+          _start--;
+          progressCalculated();
+        });
+      } else {
+        _timer?.cancel();
+        _timer = null;
+        setState(() {
+          _isRunning = false;
+          isTimerRunning = false;
+        });
+        Navigator.pushNamed(context, '/EvaluationPage');
+      }
+
+      checkTTSAnnouncements();
+    });
   }
 
   Future<void> checkTTSAnnouncements() async {
@@ -171,8 +192,8 @@ class _TimeCounterState extends State<TimeCounter> {
                   _progress = 1.0; // Reset progress
                   _timer?.cancel();
                   _isRunning = false;
-                  isTimerRunning = false;
-                  handleTimerStatusChange(true);
+                  isTimerRunning = true;
+                  // handleTimerStatusChange(true);
                 });
                 Navigator.pushNamed(context, '/EvaluationPage');
               },

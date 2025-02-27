@@ -123,7 +123,7 @@ class DescriptionPassState extends State<DescriptionPass> {
           Navigationbutton(
             onForwardPressed: onNextButtonPressed,
             onBackPressed: () {
-              SystemNavigator.pop();
+              Navigator.pop(context);
             },
           )
         ],

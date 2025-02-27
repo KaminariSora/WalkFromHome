@@ -16,8 +16,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'Description_Pass.dart';
 
 void main() async {
-  WidgetsFlutterBinding
-      .ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(
     MultiProvider(
