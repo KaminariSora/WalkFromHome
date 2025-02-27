@@ -48,6 +48,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_screenutil: ^5.9.3
   wakelock_plus: ^1.2.10
+  internet_connection_checker_plus: ^2.7.0
 
 
 dev_dependencies:

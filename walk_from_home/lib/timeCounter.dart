@@ -84,6 +84,7 @@ class _TimeCounterState extends State<TimeCounter> {
               _isRunning = false;
               isTimerRunning = false;
             });
+            Navigator.pushNamed(context, '/EvaluationPage');
           }
           checkTTSAnnouncements();
         });
@@ -199,7 +200,9 @@ class _TimeCounterState extends State<TimeCounter> {
                 style: TextStyle(fontSize: 24, color: Colors.black),
               ),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             ElevatedButton(
               onPressed: resetTimer,
               style: ElevatedButton.styleFrom(

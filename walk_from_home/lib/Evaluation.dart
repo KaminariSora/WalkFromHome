@@ -2,6 +2,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:walk_from_home/providers/user_data_provider.dart';
 
 class EvaluationPage extends StatefulWidget {
@@ -12,12 +13,11 @@ class EvaluationPage extends StatefulWidget {
 }
 
 class _EvaluationPageState extends State<EvaluationPage> {
-
   @override
   Widget build(BuildContext context) {
     final userDataProvider = Provider.of<UserDataProvider>(context);
     double distance = userDataProvider.userData.distance;
-    
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -99,6 +99,17 @@ class _EvaluationPageState extends State<EvaluationPage> {
                   ),
                   ElevatedButton(
                       onPressed: () async {
+                        bool isConnected =
+                            await InternetConnection().hasInternetAccess;
+
+                        if (!isConnected) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text(
+                                    'กรุณาเชื่อมต่ออินเทอร์เน็ตก่อนบันทึกข้อมูล')),
+                          );
+                          return; // ออกจากฟังก์ชัน ไม่เรียก saveToFirebase()
+                        }
                         try {
                           await userDataProvider
                               .saveToFirebase(); // Save to Firebase
