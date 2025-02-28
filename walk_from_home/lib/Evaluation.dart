@@ -1,4 +1,6 @@
 // ignore: file_names
+// ignore_for_file: use_build_context_synchronously, unused_local_variable
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +18,26 @@ class _EvaluationPageState extends State<EvaluationPage> {
   @override
   Widget build(BuildContext context) {
     final userDataProvider = Provider.of<UserDataProvider>(context);
-    double distance = userDataProvider.userData.distance;
+    final userData = userDataProvider.userData;
+
+    double distance = userData.distance;
+    String gender = userData.gender;
+    int age = 22; // default age
+    double weight = userData.weight;
+    double height = userData.height;
+    double criterion = 0.0;
+    late String result;
+
+    String resultingGenderEquation() {
+      if (gender == 'male') {
+        criterion = (7.57 * height) - (1.76 * age) - (1.76 * weight) - 309;
+      } else if (gender == 'female') {
+        criterion = (2.11 * height) - (5.78 * age) - (2.29 * weight) + 667;
+      } else {
+        return result = 'Gender not found';
+      }
+      return result = (distance >= criterion) ? "Healthy" : "Unhealthy";
+    }
 
     return Scaffold(
       body: SafeArea(
@@ -94,6 +115,16 @@ class _EvaluationPageState extends State<EvaluationPage> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.05,
                   ),
+                  AutoSizeText(
+                    resultingGenderEquation(),
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'prompt',
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    minFontSize: 12,
+                  ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.05,
                   ),
@@ -104,7 +135,7 @@ class _EvaluationPageState extends State<EvaluationPage> {
 
                         if (!isConnected) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
+                            const SnackBar(
                                 content: Text(
                                     'กรุณาเชื่อมต่ออินเทอร์เน็ตก่อนบันทึกข้อมูล')),
                           );
@@ -114,7 +145,8 @@ class _EvaluationPageState extends State<EvaluationPage> {
                           await userDataProvider
                               .saveToFirebase(); // Save to Firebase
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Data saved successfully!')),
+                            const SnackBar(
+                                content: Text('Data saved successfully!')),
                           );
                         } catch (error) {
                           ScaffoldMessenger.of(context).showSnackBar(
