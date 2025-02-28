@@ -1,13 +1,11 @@
+// ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import '../models/FAQBeforeTest.dart';
 // ignore_for_file: prefer_final_fields
 
 class FAQBeforeTestProvider extends ChangeNotifier {
-  FAQBeforeTest _faq = FAQBeforeTest(
-    walkingType: '',
-    walkingStride: ''
-  );
+  FAQBeforeTest _faq = FAQBeforeTest(walkingType: '', walkingStride: '');
 
   FAQBeforeTest get faq => _faq;
 
@@ -23,10 +21,7 @@ class FAQBeforeTestProvider extends ChangeNotifier {
   }
 
   // Function to update multiple variables
-  void updateFAQ({
-    String? walkingType,
-    String? walkingStride
-  }) {
+  void updateFAQ({String? walkingType, String? walkingStride}) {
     if (walkingType != null) _faq.walkingType = walkingType;
     if (walkingStride != null) _faq.walkingStride = walkingStride;
     notifyListeners();

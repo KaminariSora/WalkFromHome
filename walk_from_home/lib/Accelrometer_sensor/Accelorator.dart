@@ -3,15 +3,8 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:walk_from_home/CalibratePopup.dart';
-// import 'package:flutter_application_1/models/Calibrate_data.dart';
-// import 'package:flutter_application_1/models/user_data.dart';
-// import 'package:flutter_application_1/providers/FAQBeforeTest_provider.dart';
-// import 'package:flutter_application_1/providers/calibrate_provider.dart';
-// import 'package:flutter_application_1/providers/user_data_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:o3d/o3d.dart';
 import 'package:walk_from_home/providers/FAQBeforeTest_provider.dart';
 import 'package:walk_from_home/providers/calibrate_provider.dart';
@@ -49,7 +42,6 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
 
   Timer? timer;
   StreamSubscription? _accelerometerSubscription;
-  final FlutterTts _flutterTts = FlutterTts();
 
   @override
   void initState() {
@@ -131,23 +123,28 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
   }
 
   void calibrateCheckFunction(BuildContext context) {
-    final faqProvider = Provider.of<FAQBeforeTestProvider>(context, listen: false);
+    final faqProvider =
+        Provider.of<FAQBeforeTestProvider>(context, listen: false);
     final faq = faqProvider.faq;
-    final userDataProvider = Provider.of<UserDataProvider>(context, listen: false);
+    final userDataProvider =
+        Provider.of<UserDataProvider>(context, listen: false);
     final userData = userDataProvider.userData;
-    final calibrateProvider = Provider.of<CalibrateProvider>(context, listen: false);
-    final CalibrateData = calibrateProvider.calibrate;
-    final stepDistance = CalibrateData.calibrateDistance/CalibrateData.calibrateStepCount;
+    final calibrateProvider =
+        Provider.of<CalibrateProvider>(context, listen: false);
+    final calibrateData = calibrateProvider.calibrate;
+    final stepDistance =
+        calibrateData.calibrateDistance / calibrateData.calibrateStepCount;
     gender = userData.gender;
     height = userData.height;
 
-    if (CalibrateData.calibrateCheck == true && gender == "male") {
+    if (calibrateData.calibrateCheck == true && gender == "male") {
       walkingDistance = calculateCalibrateDistanceMale(stepDistance, stepCount);
       userData.distance = walkingDistance;
-    } else if (CalibrateData.calibrateCheck == true && gender == "female") {
-      walkingDistance = calculateCalibrateDistanceFemale(stepDistance, stepCount);
+    } else if (calibrateData.calibrateCheck == true && gender == "female") {
+      walkingDistance =
+          calculateCalibrateDistanceFemale(stepDistance, stepCount);
       userData.distance = walkingDistance;
-    } else if (CalibrateData.calibrateCheck == false && gender == 'male') {
+    } else if (calibrateData.calibrateCheck == false && gender == 'male') {
       switch (faq.walkingStride) {
         case "short_stride":
           stepDistanceMale = 0.3266194883;
@@ -163,7 +160,7 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
       }
       walkingDistance = calculateDistanceMale(stepDistanceMale, stepCount);
       userData.distance = walkingDistance;
-    } else if (CalibrateData.calibrateCheck == false && gender == "female") {
+    } else if (calibrateData.calibrateCheck == false && gender == "female") {
       switch (faq.walkingStride) {
         case "short_stride":
           stepDistanceFemale = 0.3266194883;
@@ -183,25 +180,22 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
   }
 
   double calculateDistanceMale(double stepDistanceMale, int stepCount) {
-    print('calculated male');
-    print(stepDistanceMale);
     return (height * stepDistanceMale * stepCount) / 100;
   }
 
   double calculateDistanceFemale(double stepDistanceFemale, int stepCount) {
-    print('calculated female');
     return (height * stepDistanceFemale * stepCount) / 100;
   }
 
-  double calculateCalibrateDistanceMale(double stepDistanceMale, int stepCount) {
+  double calculateCalibrateDistanceMale(
+      double stepDistanceMale, int stepCount) {
     double distanceCalibrate = stepDistanceMale * stepCount;
-    print(' calibrate calculated male');
     return distanceCalibrate;
   }
 
-  double calculateCalibrateDistanceFemale(double stepDistanceFemale, int stepCount) {
+  double calculateCalibrateDistanceFemale(
+      double stepDistanceFemale, int stepCount) {
     double distanceCalibrate = stepDistanceFemale * stepCount;
-    print(' calibrate calculated female');
     return distanceCalibrate;
   }
 
@@ -219,30 +213,27 @@ class _AcceloratorFunctionState extends State<AcceloratorFunction> {
 
   @override
   Widget build(BuildContext context) {
-    final faqProvider = Provider.of<FAQBeforeTestProvider>(context);
-    final faq = faqProvider.faq;
-    final userDataProvider = Provider.of<UserDataProvider>(context, listen: false);
+    final userDataProvider =
+        Provider.of<UserDataProvider>(context, listen: false);
     final userData = userDataProvider.userData;
-    final calibrateProvider = Provider.of<CalibrateProvider>(context, listen: false);
-    final CalibrateData = calibrateProvider.calibrate;
     gender = userData.gender;
     height = userData.height;
 
     return Transform.translate(
-                  offset: const Offset(-40, -90),
-                  child: Transform.scale(
-                    scale: 1.5,
-                    child: O3D(
-                      src: 'assets/grandpa.glb',
-                      controller: o3dController,
-                      ar: false,
-                      autoPlay: true,
-                      autoRotate: false,
-                      cameraControls: false,
-                      cameraTarget: CameraTarget(-.25, 1.5, 1.5),
-                      cameraOrbit: CameraOrbit(0, 90, 1),
-                    ),
-                  ),
-                );
+      offset: const Offset(-40, -90),
+      child: Transform.scale(
+        scale: 1.5,
+        child: O3D(
+          src: 'assets/grandpa.glb',
+          controller: o3dController,
+          ar: false,
+          autoPlay: true,
+          autoRotate: false,
+          cameraControls: false,
+          cameraTarget: CameraTarget(-.25, 1.5, 1.5),
+          cameraOrbit: CameraOrbit(0, 90, 1),
+        ),
+      ),
+    );
   }
 }

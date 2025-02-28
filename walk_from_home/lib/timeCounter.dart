@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';

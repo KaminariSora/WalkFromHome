@@ -28,12 +28,11 @@ class _InfromationstepsState extends State<Infromationsteps> {
   late FAQBeforeTest faq;
   late CalibrateData calibrateData;
 
-
   @override
   Widget build(BuildContext context) {
-    final faqProvider = Provider.of<FAQBeforeTestProvider>(context);  
+    final faqProvider = Provider.of<FAQBeforeTestProvider>(context);
     final calibrateProvider = Provider.of<CalibrateProvider>(context);
-    void _onButton1Pressed() {
+    void onButton1Pressed() {
       setState(() {
         walkingStyle = 'ช้า';
         isPressedButton1 = true;
@@ -43,7 +42,7 @@ class _InfromationstepsState extends State<Infromationsteps> {
       });
     }
 
-    void _onButton2Pressed() {
+    void onButton2Pressed() {
       setState(() {
         walkingStyle = 'ปกติ';
         isPressedButton1 = false;
@@ -53,7 +52,7 @@ class _InfromationstepsState extends State<Infromationsteps> {
       });
     }
 
-    void _onButton3Pressed() {
+    void onButton3Pressed() {
       setState(() {
         walkingStyle = 'เร็ว';
         isPressedButton1 = false;
@@ -62,19 +61,20 @@ class _InfromationstepsState extends State<Infromationsteps> {
         faqProvider.updateWalkingType('fast_walk');
       });
     }
+
     void showAlert(BuildContext context, String message) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("แจ้งเตือน"),
+            title: const Text("แจ้งเตือน"),
             content: Text(message),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text("ตกลง"),
+                child: const Text("ตกลง"),
               ),
             ],
           );
@@ -280,7 +280,7 @@ class _InfromationstepsState extends State<Infromationsteps> {
                   width: 104,
                   height: 150,
                   child: TextButton(
-                    onPressed: _onButton1Pressed,
+                    onPressed: onButton1Pressed,
                     style: TextButton.styleFrom(
                       backgroundColor:
                           isPressedButton1 ? Colors.grey : Colors.white,
@@ -318,7 +318,7 @@ class _InfromationstepsState extends State<Infromationsteps> {
                   width: 104,
                   height: 150,
                   child: TextButton(
-                    onPressed: _onButton2Pressed,
+                    onPressed: onButton2Pressed,
                     style: TextButton.styleFrom(
                       backgroundColor:
                           isPressedButton2 ? Colors.grey : Colors.white,
@@ -356,7 +356,7 @@ class _InfromationstepsState extends State<Infromationsteps> {
                   width: 104,
                   height: 150,
                   child: TextButton(
-                    onPressed: _onButton3Pressed,
+                    onPressed: onButton3Pressed,
                     style: TextButton.styleFrom(
                       backgroundColor:
                           isPressedButton3 ? Colors.grey : Colors.white,

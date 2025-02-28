@@ -29,7 +29,7 @@ class Home extends StatelessWidget {
                         screenWidth * 0.8, // ขนาดสูงรูปภาพสัมพันธ์กับความกว้าง
                   ),
                 ),
-                Spacer(), // เว้นระยะตรงกลาง
+                const Spacer(), // เว้นระยะตรงกลาง
                 Padding(
                   padding: EdgeInsets.only(
                     bottom: screenHeight *
@@ -39,18 +39,9 @@ class Home extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushNamed(context, '/Description');
                     },
-                    child: Text(
-                      'เริ่มต้นใช้งาน',
-                      style: TextStyle(
-                        fontSize: screenWidth *
-                            0.05, // ขนาดตัวอักษร 5% ของความกว้างหน้าจอ
-                        fontFamily: 'prompt',
-                        color: Colors.black,
-                      ),
-                    ),
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black,
-                      backgroundColor: Color(0xFFD9D9D9),
+                      backgroundColor: const Color(0xFFD9D9D9),
                       padding: EdgeInsets.symmetric(
                         horizontal: screenWidth *
                             0.1, // Padding แนวนอน 10% ของความกว้างหน้าจอ
@@ -59,10 +50,19 @@ class Home extends StatelessWidget {
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
-                        side: BorderSide(
+                        side: const BorderSide(
                           color: Colors.black,
                           width: 2,
                         ),
+                      ),
+                    ),
+                    child: Text(
+                      'เริ่มต้นใช้งาน',
+                      style: TextStyle(
+                        fontSize: screenWidth *
+                            0.05, // ขนาดตัวอักษร 5% ของความกว้างหน้าจอ
+                        fontFamily: 'prompt',
+                        color: Colors.black,
                       ),
                     ),
                   ),

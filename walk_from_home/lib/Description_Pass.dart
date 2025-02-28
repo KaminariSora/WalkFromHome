@@ -1,8 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'NavigationButton.dart';
-import 'pretest.dart';
 
 class DescriptionPass extends StatefulWidget {
   const DescriptionPass({super.key});
@@ -19,14 +17,14 @@ class DescriptionPassState extends State<DescriptionPass> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("แจ้งเตือน"),
-          content: Text("กรุณาอ่านคำอธิบายทั้งหมด"),
+          title: const Text("แจ้งเตือน"),
+          content: const Text("กรุณาอ่านคำอธิบายทั้งหมด"),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("ตกลง"),
+              child: const Text("ตกลง"),
             ),
           ],
         );
