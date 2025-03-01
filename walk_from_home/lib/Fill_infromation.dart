@@ -1,5 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:walk_from_home/providers/user_data_provider.dart';
@@ -122,8 +123,7 @@ class _FillinFormState extends State<FillinForm> {
           body: SingleChildScrollView(
             child: Container(
               height: screenHeight,
-              alignment: Alignment
-                  .topCenter,
+              alignment: Alignment.topCenter,
               margin: const EdgeInsets.fromLTRB(20, 50, 20, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -229,6 +229,7 @@ class _FillinFormState extends State<FillinForm> {
           TextField(
             controller: controller,
             keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: const InputDecoration(
               hintText: '',
             ),

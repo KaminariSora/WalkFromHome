@@ -2,6 +2,7 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:walk_from_home/providers/user_data_provider.dart';
 import 'ButtonSwapExample.dart';
@@ -141,6 +142,9 @@ class _PretestState extends State<Pretest> {
                               child: TextField(
                                 controller: heartRateController,
                                 keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
                                 decoration: const InputDecoration(
                                   hintText: '',
                                 ),
@@ -214,6 +218,7 @@ Widget inputbox(String title, TextEditingController controller) {
           child: TextField(
             controller: controller,
             keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: const InputDecoration(
               hintText: '',
             ),
